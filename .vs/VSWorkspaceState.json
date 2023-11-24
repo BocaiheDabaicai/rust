@@ -1,11 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\actix-gcd",
-    "\\actix-gcd\\src",
-    "\\hello",
-    "\\hello\\src"
+    "\\mandelbrot",
+    "\\mandelbrot\\src",
+    "\\mandelbrot\\target\\debug"
   ],
-  "SelectedNode": "\\hello\\src\\main.rs",
+  "SelectedNode": "\\mandelbrot\\src\\main.rs",
   "PreviewInSolutionExplorer": false
 }
