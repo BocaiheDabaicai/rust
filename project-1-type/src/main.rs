@@ -18,4 +18,27 @@ fn main() {
 
     assert_eq!(255_u8.overflowing_sub(2), (253, false));  // 运算结果是否溢出
     assert_eq!(255_u8.overflowing_add(2), (1, true));
+
+    // 3. 浮点类型
+    assert!((-1. / f32::INFINITY).is_sign_negative());
+    assert_eq!(-f32::MIN, f32::MAX);
+    assert_eq!(5f32.sqrt() * 5f32.sqrt(), 5.);
+    assert_eq!((-1.01f64).floor(), -2.0);
+    println!("{}", (2.0_f64).sqrt());
+    println!("{}", f64::sqrt(2.0));
+
+    // 4. 布尔类型
+    assert_eq!(false as i32, 0);
+    assert_eq!(true as i32, 1);
+
+    // 5. 字符类型
+    assert_eq!('*' as i32, 42);
+    assert_eq!('\u{CA0}' as u16, 0xca0);
+    assert_eq!('\u{CA0}' as i8, -0x60);
+    assert_eq!('*'.is_alphabetic(), false);
+
+    // 6. 元组类型
+    let text = "I see the eigenvalue in thine eye.";
+    let (head,tail) = text.split_at(21);
+    println!("{} \n {}",head,tail);
 }
