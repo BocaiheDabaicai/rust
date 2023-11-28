@@ -40,7 +40,7 @@ fn main() {
         let text = "I see the eigenvalue in thine eye.";
         let (head, tail) = text.split_at(21);
         println!("{} \n {}", head, tail);*/
-
+    /*
     // 7. 数组类型
     // 数组
     let lazy_caterer: [u32; 6] = [1, 2, 3, 4, 5, 6];
@@ -121,10 +121,30 @@ fn main() {
     assert_eq!(v.pop(), Some("Snow Puff"));
     assert_eq!(v.pop(), None);
 
-    let languages:Vec<String> = std::env::args().skip(1).collect();
+    let languages: Vec<String> = std::env::args().skip(1).collect();
     for l in languages {
-        println!("{}: {}",l,
-            if l.len() % 2 == 0 { "functional" }
-            else { "imperative" });
+        println!("{}: {}", l,
+                 if l.len() % 2 == 0 { "functional" } else { "imperative" });
     }
+
+    // 切片
+    let v: Vec<f64> = vec![0.0, 0.707, 1.0, 0.707];
+    let a: [f64; 4] = [0.0, -0.707, -1.0, -0.707];
+    let sv: &[f64] = &v;
+    let sa: &[f64] = &a;
+
+    fn print(n:&[f64]){
+        for elt in n {
+            print!("{} ",elt);
+        }
+        println!();
+    }
+
+    print(&v);
+    print(&a);
+
+    print(&v[0..2]);
+    print(&a[2..]);
+    print(&sv[1..3]);
+*/
 }
