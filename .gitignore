@@ -8,3 +8,6 @@
 quickreplace/target/debug/.fingerprint/aho-corasick-ae09c346631f354e/lib-aho_corasick.json
 quickreplace/target/debug/
 .vs/rust/FileContentIndex/
+hello/target/
+helloworld/target/
+project-1-type/target/
