@@ -1,3 +1,5 @@
+use std::fmt::Pointer;
+
 fn main() {
     println!("Hello, world!");
 
@@ -54,4 +56,44 @@ fn main() {
     let result1 = add_v1(20, a);  // 调用函数
     let result2 = add_v2(20);  // 调用闭包
     println!("{}", result2);
+
+    let mut x = 5;
+    println!("The value of x is: {x}");
+    x = 6;
+    println!("The value of x is: {x}");
+
+    let a = 1;
+    let b = a;
+
+    let str1 = String::from("asdb haskdq");
+    let str2 = str1;
+
+    println!("{a}");
+    println!("{b}");
+
+    // println!("{str1}");
+    println!("{str2}");
+
+    let s = "I am a superman.".to_string();
+
+    for i in 1..10 {
+        // 在第二次进行循环时，s已经没有所有权
+        // let tmp_s = s;
+        let tmp_s = s.clone();
+        println!("s is {}", tmp_s);
+    }
+
+    struct Point {
+        x: i64,
+        y: i64,
+        z: i64
+    }
+    let tmp_s = Point{
+        x:12,
+        y:33,
+        z:20
+    };
+    let tmp_s2 = tmp_s;
+    // println!("s is {}",tmp_s.x);
+    println!("s is {}",tmp_s2.x)
 }
