@@ -1,6 +1,4 @@
-use std::fmt::Pointer;
-
-fn main() {
+/*fn main() {
     println!("Hello, world!");
 
     // 将""号进行转义
@@ -86,14 +84,96 @@ fn main() {
     struct Point {
         x: i64,
         y: i64,
-        z: i64
+        z: i64,
     }
-    let tmp_s = Point{
-        x:12,
-        y:33,
-        z:20
+    let tmp_s = Point {
+        x: 12,
+        y: 33,
+        z: 20,
     };
     let tmp_s2 = tmp_s;
     // println!("s is {}",tmp_s.x);
-    println!("s is {}",tmp_s2.x)
+    println!("s is {}", tmp_s2.x);
+
+    let mut a1 = 10u32;
+    let mut b = &mut a1;
+    let mut c = &mut b;
+    let d = &mut c;
+
+    ***d = 30;
+
+    println!("{d}");
+
+    // let mut a: u32 = 10;
+    // let b = &mut a;
+    // *b += 10;
+    // let c = &mut a;
+    // *c += 10;
+    // let d = &mut a;
+    //
+    // println!("{}", d);
+}*/
+
+fn main() {
+    // let s1: &'static str = "I am a superman.";
+    // let s2: String = s1.to_string();
+    // let s3: &String = &s2;
+    // let s4: &str = &s2[..];
+    // let s5: &str = &s2[..6];
+    //
+    // let s: String = "I am a superman.".to_string();
+    // let a_slice: &str = &s[..];
+    // let another_String: String = a_slice.to_string();
+
+    // let s: &str = "I am a superman.";
+    // let s1: String = String::from(s);  // 使用 String 的from构造器
+    // let s2: String = s.to_string();    // 使用 to_string() 方法
+    // let s3: String = s.to_owned();     // 使用 to_owned() 方法
+    //
+    // println!("{}", s1);
+    // println!("{}", s2);
+    // println!("{}", s3);
+
+    // String 与 str 类型的相互转换
+    // let s: String = "I am a superman.".to_string();
+    // let a_slice: &str = &s[..];
+    // let another_String: String = a_slice.to_string();
+
+    // let s = String::from("abcdefg");
+    // let s1 = &s[..];    // s1 内容是 "abcdefg"
+    // let s2 = &s[0..4];  // s2 内容是 "abcd"
+    // let s3 = &s[2..5];    // s3 内容是 "cde"
+
+    // let a_vec: Vec<u8> = vec![1, 2, 3, 4, 5, 6, 7, 8];
+    // let a_slice: &[u8] = &a_vec[0..5]; // a_slice 是 [1,2,3,4,5]
+    // let another_vec = a_slice.to_vec(); // 用 .to_vec() 方法将切片转换成Vec
+    // let another_vec = a_slice.to_owned(); // 或者用 .to_owned() 方法
+
+    let s = String::from("foo");
+    assert_eq!("foo", s.as_str());
+
+    let s = String::from("hello");
+    assert_eq!(&[104, 101, 108, 108, 111], s.as_bytes());
+
+    let bytes = "bors".as_bytes();
+    assert_eq!(b"bors", bytes);
+
+    let a = "10".parse::<u32>();
+    let aa: u32 = "10".parse().unwrap(); // 这种写法也很常见
+    println!("{:?}", a);
+
+    let a = "10".parse::<f32>();
+    println!("{:?}", a);
+
+    let a = "4.2".parse::<f32>();
+    println!("{:?}", a);
+
+    let a = "true".parse::<bool>();
+    println!("{:?}", a);
+
+    let a = "a".parse::<char>();
+    println!("{:?}", a);
+
+    let a = "192.168.1.100".parse::<std::net::IpAddr>();
+    println!("{:?}", a);
 }
