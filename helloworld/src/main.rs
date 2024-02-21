@@ -114,7 +114,7 @@
     // println!("{}", d);
 }*/
 
-fn main() {
+/*fn main() {
     // let s1: &'static str = "I am a superman.";
     // let s2: String = s1.to_string();
     // let s3: &String = &s2;
@@ -176,4 +176,52 @@ fn main() {
 
     let a = "192.168.1.100".parse::<std::net::IpAddr>();
     println!("{:?}", a);
+}*/
+
+// struct User {
+//     active: bool,
+//     username: String,
+//     email: String,
+//     sign_in_count: u64,
+// }
+//
+// struct Class {
+//     serial_number: u32,
+//     grade_number: u32,
+//     entry_year: String,
+//     members: Vec<User>,
+// }
+
+// fn main() {
+//     let user1 = User {
+//         active: true,
+//         username: String::from("someusername123"),
+//         email: String::from("someone@example.com"),
+//         sign_in_count: 1,
+//     };
+// }
+
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    // 就像这样去实现
+    fn area(self) -> u32 {      // area就是方法，被放在impl实现体中
+        self.width * self.height
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        rect1.area()      // 使用点号操作符调用area方法
+    );
 }
