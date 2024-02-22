@@ -178,7 +178,7 @@
     println!("{:?}", a);
 }*/
 
-// struct User {
+/*// struct User {
 //     active: bool,
 //     username: String,
 //     email: String,
@@ -224,4 +224,36 @@ fn main() {
         "The area of the rectangle is {} square pixels.",
         rect1.area()      // 使用点号操作符调用area方法
     );
+}*/
+
+
+#[derive(Debug)]
+pub enum Option<T> {
+    Some(T),
+    None,
+}
+
+pub enum Result<T,E>{
+    Ok(T),
+    Err(E)
+}
+
+// fn main() {
+//     let s = String::from("");
+//     let a: Option<String> = Option::Some(s);
+//
+//     println!("{:?}",a);
+// }
+
+fn main() {
+    let s1 = String::from("aaa");
+    let s2 = String::from("bbb");
+    let s3 = String::from("ccc");
+    let s4 = String::from("ddd");
+
+    let v = vec![s1, s2, s3, s4];
+    for s in &v {      // 这里，s拿到了集合元素的所有权
+        println!("{}", s);
+    }
+    println!("{:?}", v);
 }
