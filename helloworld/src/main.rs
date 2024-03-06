@@ -245,15 +245,20 @@ pub enum Result<T,E>{
 //     println!("{:?}",a);
 // }
 
-fn main() {
-    let s1 = String::from("aaa");
-    let s2 = String::from("bbb");
-    let s3 = String::from("ccc");
-    let s4 = String::from("ddd");
+// fn main() {
+//     let s1 = String::from("aaa");
+//     let s2 = String::from("bbb");
+//     let s3 = String::from("ccc");
+//     let s4 = String::from("ddd");
+//
+//     let v = vec![s1, s2, s3, s4];
+//     for s in &v {      // 这里，s拿到了集合元素的所有权
+//         println!("{}", s);
+//     }
+//     println!("{:?}", v);
+// }
 
-    let v = vec![s1, s2, s3, s4];
-    for s in &v {      // 这里，s拿到了集合元素的所有权
-        println!("{}", s);
-    }
-    println!("{:?}", v);
+#[tokio::main]      // 这个是tokio库里面提供的一个属性宏标注
+async fn main() {   // 注意 main 函数前面有 async
+    println!("Hello world");
 }
