@@ -46,3 +46,17 @@
 - rustup，rust管理器
 
 - cargo，rust项目管理器
+  
+  - cargo build，发布可调式版本代码
+  
+  - cargo build --release，发布正式版本代码
+  
+  - cargo clean，清理所有发布代码
+  
+  - cargo run，生成可调式版本代码，并运行
+  
+  - cargo run --quiet，生成可调式版本代码，并运行，不显示内部构建代码
+  
+  - cargo check，检查当前代码是否有编译上的问题，并生成可调式代码
+
+- rustfmt，rust代码整理器
