@@ -42,10 +42,16 @@
 #### 命令工具
 
 - rustc，rust编译器
+  
+  - rustc <fileName>，编译.rc文件，使得访问它可以直接执行
 
 - rustup，rust管理器
+  
+  - rustup update，更新`rust`官方代码版本，达到最新
 
 - cargo，rust项目管理器
+  
+  - cargo new <Name>，创建项目
   
   - cargo build，发布可调式版本代码
   
@@ -60,3 +66,5 @@
   - cargo check，检查当前代码是否有编译上的问题，并生成可调式代码
 
 - rustfmt，rust代码整理器
+  
+  - rustfmt <fileName>，格式化该文件的`rust`代码
