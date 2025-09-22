@@ -68,3 +68,7 @@
 - rustfmt，rust代码整理器
   
   - rustfmt <fileName>，格式化该文件的`rust`代码
+
+#### 变量
+
+- 变量名，小写，用短横线隔开
