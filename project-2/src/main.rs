@@ -1,4 +1,16 @@
+/*
+善意警告：value assigned to `coffee_price` is never read
+发生在变量初值未使用，而后面使用了重新赋的值，就会触发该警告
+其目的在于提示我可能出现了不必要地赋初值过程
+直接使用赋值，或者使用初值，都可以解决这个问题
+*/
+
+#![warn(unused_assignments)]  // 作用于整个函数的编译指令，并进行全局强调
+
+type Meters = i32; // 声明自定义数据类型
+
 const TAX_RATES: f64 = 0.075; // 常量声明
+const TOUCHDOWN_POINTS:i32 = 6;
 
 fn main() {
     let apples_in_garden = 50;
@@ -9,8 +21,11 @@ fn main() {
     let _grams_of_protein = "100.32";
     let _grams_of_protein = 100.32;
     let mut grams_of_protein = 100; // 实现变量的重新声明
-    let mut coffee_price = 5.99; // 变量使用在函数作用域内，bug
-    let income:i32 = 9000; // 声明变量的类型
+    let mut coffee_price = 5.99; // 变量使用在函数作用域内
+    let income: i32 = 9000; // 声明变量的类型
+    let meter: Meters = 10; // 使用自定义数据类型
+    #[allow(unused_variables)] // 关闭警告的编译指令
+    let two_meter: Meters = 10;
 
     println!("Hello, world!");
     // 输出值的两种方法
@@ -56,8 +71,18 @@ fn main() {
     coffee_price = 2.11;
     println!("The coffee_price is {coffee_price}");
 
-
     println!("My income is {income}.The const_data is {TAX_RATES}");
+
+    println!("The data is {meter}");
+
+    // mission
+    let season:&str = "Summer";
+    let mut points_scored:i32 = 28;
+    let event_time:&str = "06:00";
+    let event_time:i32 = 6;
+    let favorite_beverage:&str = "cole";
+    points_scored = 35;
+    println!("{season} has {points_scored} scores in {event_time}:00pm");
 }
 
 // coffee_price = 2; // 超过了函数的作用域
