@@ -93,16 +93,47 @@ fn main() {
     println!("I'm {} years old, can I go to a cinema? {}", age, is_young);
 
     // 逻辑表达式
-    println!("\"Coke\" == \"Coke\", result is: {}","Coke" == "Coke");
-    println!("\"Coke\" == \"coke\", result is: {}","Coke" == "coke");
-    println!("\"Coke\" != \"Coke\", result is: {}","Coke" != "Coke");
-    println!("\"Coke\" != \"coke\", result is: {}","Coke" != "coke");
+    println!("\"Coke\" == \"Coke\", result is: {}", "Coke" == "Coke");
+    println!("\"Coke\" == \"coke\", result is: {}", "Coke" == "coke");
+    println!("\"Coke\" != \"Coke\", result is: {}", "Coke" != "Coke");
+    println!("\"Coke\" != \"coke\", result is: {}", "Coke" != "coke");
 
-    let data26:bool = true;
-    let data27:bool = true;
-    let data28:bool = false;
-    let data29:bool = data26 && data27;
-    let data30:bool = data26 && data27 && data28;
+    let data26: bool = true;
+    let data27: bool = true;
+    let data28: bool = false;
+    let data29: bool = data26 && data27;
+    let data30: bool = data26 && data27 && data28;
     println!("data29:bool = data26 && data27, result is: {}", data29);
-    println!("data30:bool = data26 && data27 && data28, result is: {}", data30);
+    println!(
+        "data30:bool = data26 && data27 && data28, result is: {}",
+        data30
+    );
+
+    let data31: bool = true;
+    let data32: bool = false;
+    let data33: bool = false;
+    let data34: bool = data31 || data32;
+    let data35: bool = data31 || data32 || data33;
+    let data36: bool = data31 || data32 || data33 && data34;
+    println!("data34:bool = data31 || data32, result is: {}", data34);
+    println!(
+        "data35:bool = data31 || data32 || data33, result is: {}",
+        data35
+    );
+    println!(
+        "data36:bool = data31 || data32 || data33 && data34, result is: {}",
+        data36
+    );
+
+    // 字符格式
+    let data37: char = 'B';
+    let data38: char = '🍔';
+    println!(
+        "char is: {}, Is a alphabetic(): {}, is_uppercase(): {}, is_lowercase(): {}",
+        data37,
+        data37.is_alphabetic(),
+        data37.is_uppercase(),
+        data37.is_lowercase()
+    );
+    println!("char is: {}", data38);
 }
