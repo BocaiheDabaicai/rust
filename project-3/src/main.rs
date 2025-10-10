@@ -136,4 +136,30 @@ fn main() {
         data37.is_lowercase()
     );
     println!("char is: {}", data38);
+
+    // 数组
+    let numbers: [i8; 10] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 数组是固定大小的元素，不能多也不能少
+    let mut apples: [&str; 4] = ["asd", "dq12", "ffgr", "dewq441"];
+    println!("apples.len: {}", apples.len());
+    let empty_array: [f32; 0] = [];
+
+    let index_1: &str = apples[0];
+    let index_2: &str = apples[1];
+    let index_3: &str = apples[2];
+    let index_4: &str = apples[3];
+    println!("index_1: {}", index_1);
+    println!("index_2: {}", index_2);
+    println!("index_3: {}", index_3);
+    println!("index_4: {}", index_4);
+
+    apples[0] = "ds453453";
+
+    println!("apples[0]: {}", apples[0]);
+    println!("apples[1]: {}", apples[1]);
+    println!("apples[2]: {}", apples[2]);
+    println!("apples[3]: {}", apples[3]);
+
+    // trait
+    let seasons: [&str; 6] = ["summer", "fall", "winter", "spring", "autumn", "spring"];
+    // println!("{}", seasons);    // 这是无法直接打印的
 }
