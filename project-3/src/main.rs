@@ -162,4 +162,53 @@ fn main() {
     // trait
     let seasons: [&str; 6] = ["summer", "fall", "winter", "spring", "autumn", "spring"];
     // println!("{}", seasons);    // 这是无法直接打印的
+    println!("seasons: {:?}", seasons); // 方式一
+    println!("seasons: {seasons:?}"); // 方式二
+    println!("seasons: {:#?}", seasons); // 漂亮格式打印数组
+
+    // debug
+    dbg!(2 + 3);
+    dbg!(seasons);
+
+    // 元组
+    let employee = ("Bob", 32, "programming");
+    let name = employee.0;
+    let age = employee.1;
+    let career = employee.2;
+    let (name, age, career) = employee; // 获取元组值的另外一种方式
+
+    dbg!(employee);
+    dbg!(name);
+    dbg!(age);
+    dbg!(career);
+
+    // 范围和范围迭代
+    let month_days = 1..31; // 表示1-30的范围
+    let month_days_two = 1..=31; // 表示1-31的范围
+    let letters = 'a'..='x';
+
+    println!("{:?}", month_days);
+    println!("{:?}", month_days_two);
+
+    /*
+        dbg 被用于一个值后，这个值就不能另作他用，
+        如果改变这种情况，用只能通过给dbg引用值的地址
+        即：dbg!(&data)
+    */
+    // dbg!(month_days);
+    // dbg!(month_days_two);
+
+    for month_day in month_days {
+        print!("{} ", month_day);
+    }
+    println!();
+
+    for letter in letters {
+        print!("{} ", letter);
+    }
+    println!();
+
+    for season in seasons {
+        print!("{} ", season);
+    }
 }
