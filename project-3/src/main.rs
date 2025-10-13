@@ -211,4 +211,27 @@ fn main() {
     for season in seasons {
         print!("{} ", season);
     }
+    println!();
+
+    // 泛型
+    let data39: std::ops::Range<i16> = 1..31;
+    let data40: std::ops::Range<char> = 'a'..'g';
+
+    // test
+    let data_t01 = 13_37;
+    let data_t02 = data_t01 as i16;
+
+    let data_t03 = 12.3325;
+    println!("{:.3}",data_t03);
+
+    let with_milk = true;
+    let with_sugar = false;
+    let is_my_type_of_coffee = with_milk && with_sugar;
+    let is_acceptable_coffee = with_milk || with_sugar;
+
+    let data_t04:[i8;5] = [1,2,3,4,5];
+    dbg!(data_t04);
+
+    let data_t05 = (12,32.1,false,[2,3,4,5]);
+    dbg!(data_t05);
 }
