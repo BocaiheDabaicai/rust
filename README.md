@@ -623,3 +623,13 @@ fn alphabets(text:&str) -> (bool,bool){
 ---
 
 #### 控制流
+
+- If语句
+  
+  - 表达结构：`if 条件 {代码块}`
+  
+  - 具有关联性，通过`else-if,else`进行关联
+  
+  - 具备独立性，每一个`if`语句都是一个独立的关联块
+  
+  - 简短表达式：`let result = if 条件 {变量值} else {变量值}`
