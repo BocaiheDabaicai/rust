@@ -53,6 +53,33 @@ fn main() {
 
     println!("The data2 is: {}", data2);
     println!("The data3 is: {}", data3);
+
+    // match for season， 两种表达方式：语句块模式、单行模式
+    match season {
+        "summer" => {
+            println!("Now is summer day.");
+        }
+        "winter" => {
+            println!("Now is winter day.");
+        }
+        "spring" => {
+            println!("Now is spring day.");
+        }
+        "autumn" => {
+            println!("Now is autumn day.");
+        }
+        _ => {
+            println!("We don't know the season that we face.");
+        }
+    }
+
+    match season {
+        "summer" => println!("Now is summer day."),
+        "winter" => println!("Now is winter day."),
+        "spring" => println!("Now is spring day."),
+        "autumn" => println!("Now is autumn day."),
+        _ => println!("We don't know the season that we face."),
+    }
 }
 
 fn even_or_odd(number: i32) {
