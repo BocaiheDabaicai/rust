@@ -641,3 +641,11 @@ fn alphabets(text:&str) -> (bool,bool){
   - 单行模式，每个结果是一个语句，每个语句之间用逗号隔开
   
   - 含：布尔类型判断、自定义值判断，最终用`_`收尾
+
+- iterate迭代器
+  
+  - `loop {}`，通过`break`跳出循环，通过`continue`开启下一次循环
+
+- while迭代器
+  
+  - `while 条件 {}`，通过`continue`开启下一次循环

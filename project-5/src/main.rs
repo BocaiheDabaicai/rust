@@ -80,6 +80,82 @@ fn main() {
         "autumn" => println!("Now is autumn day."),
         _ => println!("We don't know the season that we face."),
     }
+
+    // match 匹配多个值
+    let number = 2;
+    match number {
+        1 | 3 | 5 | 7 | 9 | 11 | 13 | 15 | 17 | 19 | 21 | 23 | 25 | 27 | 29 => {
+            println!("The number is odd.")
+        }
+        2 | 4 | 6 | 8 | 10 | 12 | 14 | 16 | 18 | 20 | 22 | 24 | 26 | 28 => {
+            println!("The number is odd.")
+        }
+        _ => println!("The number is unknow."),
+    }
+
+    // 本初有两种做法
+    let value = 8;
+    match value {
+        value if value % 2 == 0 => println!("The value is even"),
+        _ => println!("The number is even"),
+    }
+
+    match value {
+        value if value % 2 == 0 => println!("The value is even"),
+        x if x % 2 != 0 => println!("The number is even"),
+        _ => println!("The value is unknow."),
+    }
+
+    match value {
+        value if value % 2 == 0 => println!("The value is even"),
+        x if x % 2 != 0 => println!("The number is even"),
+        _ => unreachable!(),
+    }
+
+    // loop 迭代循环
+    let mut value = 10;
+
+    loop {
+        if value == 0 {
+            break;
+        }
+        println!("The number is: {}", value);
+        value -= 1;
+    }
+    println!("Now, The number is: {}", value);
+
+    // continue 语句 与 loop 循环结合
+
+    let mut seconds = 23;
+
+    loop {
+        if seconds <= 0 {
+            println!("Time is over.");
+            break;
+        }
+
+        if seconds % 2 == 0 {
+            println!("The seconds is even. Jump. {}s", seconds);
+            seconds -= 3;
+            continue;
+        }
+
+        println!("Time is running... {}s", seconds);
+        seconds -= 1;
+    }
+
+    seconds = 23;
+    println!("while version.");
+    while seconds > 0 {
+        if seconds % 2 == 0 {
+            println!("The seconds is even. Jump. {}s", seconds);
+            seconds -= 3;
+            continue;
+        }
+
+        println!("Time is running... {}s", seconds);
+        seconds -= 1;
+    }
 }
 
 fn even_or_odd(number: i32) {
