@@ -156,9 +156,117 @@ fn main() {
         println!("Time is running... {}s", seconds);
         seconds -= 1;
     }
+
+    // 递归
+    countdown(12);
+
+    // test
+    println!("color is: {}", color_to_number("blue"));
+    println!("color is: {}", factorial(5));
+    println!("color is: {}", factorial_recursion(5));
 }
 
 fn even_or_odd(number: i32) {
     let result = if number % 2 == 0 { "even" } else { "odd" };
     println!("The number is: {}", result);
+}
+
+fn countdown(seconds: i16) {
+    if seconds <= 0 {
+        println!("finished seconds.");
+    } else {
+        println!("{} seconds...", seconds);
+        countdown(seconds - 1)
+    }
+}
+/*
+1. If the color is "red", return 1.
+2. If the color is "green", return 2.
+3. If the color is "blue", return 3.
+4. If the color is any other string, return 0.
+*/
+fn color_to_number(color: &str) -> i16 {
+    /*if color == "red"{
+        return 1;
+    }else if color == "green" {
+        return 2;
+    }else if color == "blue" {
+        return 3;
+    }else {
+        return 0;
+    }*/
+
+    /*
+        return if color == "red" {
+            1
+        } else if color == "green" {
+            2
+        } else if color == "blue" {
+            3
+        } else {
+            0
+        }
+    */
+
+    match color {
+        "red" => {
+            return 1;
+        }
+        "green" => {
+            return 2;
+        }
+        "blue" => {
+            return 3;
+        }
+        _ => {
+            return 0;
+        }
+    }
+
+    /*match color {
+        "red" => 1,
+        "green" => 2,
+        "blue" => 3,
+        _ => 0,
+    }*/
+
+    /*return match color {
+        "red" => {
+            1
+        }
+        "green" => {
+            2
+        }
+        "blue" => {
+            3
+        }
+        _ => {
+            0
+        }
+    }*/
+}
+
+fn factorial(number: i32) -> i32 {
+    let mut sum = 1;
+    let mut count = number;
+
+    while count >= 1 {
+        sum *= count;
+        count -= 1;
+    }
+
+    // 等同于 return sum;
+    sum
+}
+
+/*
+    只要返回了递归函数，那么这个值就会被一起带到下一层
+*/
+fn factorial_recursion(number: i32) -> i32 {
+    if number < 1 {
+        return 1;
+    } else {
+        // 这句话等同于 return number * factorial_recursion(number - 1)
+        number * factorial_recursion(number - 1)
+    }
 }
