@@ -976,3 +976,11 @@ fn factorial_recursion(number: i32) -> i32 {
   - 所有权的目的是释放存储空间
   
   - 所有权减少重复的堆数据，并且清理不再使用的数据
+
+- `String`类型
+  
+  - 既不使用栈存储也不使用堆存储，而是直接编译成二进制文件
+  
+  - 声明方式：`let str:&str = "testest";`
+  
+  - 声明方式二：`let text = String::new()`
