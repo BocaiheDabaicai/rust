@@ -21,7 +21,30 @@ fn main() {
 
     // string 类型
     let food: &str = "pasta";
-    let text = String::new();   // 堆数据创建
-    let candy = String::from("KitKat Candy");   // 堆数据创建并赋值
+    let text = String::new(); // 堆数据创建
+    let candy = String::from("KitKat Candy"); // 堆数据创建并赋值
 
+    // push
+    let mut name = String::from("Jobs");
+    name.push_str(" is a good man.");
+
+    println!("{}", name);
+
+    // move
+    let person = String::from("Boris");
+    let genius = person; // 不会复制 person 的堆数据，此时表示 person 的值被移动到了 genius 上，并无法使用
+
+    // println!("{}", person);
+
+    // drop 释放堆空间
+    let person1 = String::from("Boris");
+
+    drop(person1);
+    // println!("{}", person1); // 再次使用将无效
+
+    // copy
+    let person2 = String::from("Boris");
+    let genius2 = person2.clone();  // 克隆一个新的堆空间，把数据交给 genius2
+
+    println!("{}",person2);
 }
