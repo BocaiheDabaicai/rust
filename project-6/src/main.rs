@@ -20,9 +20,9 @@ fn main() {
     println!("year: {}", year);
 
     // string 类型
-    let food: &str = "pasta";
-    let text = String::new(); // 堆数据创建
-    let candy = String::from("KitKat Candy"); // 堆数据创建并赋值
+    let _food: &str = "pasta";
+    let _text = String::new(); // 堆数据创建
+    let _candy = String::from("KitKat Candy"); // 堆数据创建并赋值
 
     // push
     let mut name = String::from("Jobs");
@@ -32,7 +32,7 @@ fn main() {
 
     // move
     let person = String::from("Boris");
-    let genius = person; // 不会复制 person 的堆数据，此时表示 person 的值被移动到了 genius 上，并无法使用
+    let _genius = person; // 不会复制 person 的堆数据，此时表示 person 的值被移动到了 genius 上，并无法使用
 
     // println!("{}", person);
 
@@ -44,7 +44,48 @@ fn main() {
 
     // copy
     let person2 = String::from("Boris");
-    let genius2 = person2.clone();  // 克隆一个新的堆空间，把数据交给 genius2
+    let _genius2 = person2.clone(); // 克隆一个新的堆空间，把数据交给 genius2
 
-    println!("{}",person2);
+    println!("{}", person2);
+
+    // reference
+    let my_ref = 12;
+    let my_ref_ref = &my_ref; // 指向一个地址
+    println!("my_ref: {}", my_ref);
+    println!("&my_ref: {}", &my_ref);
+    println!("my_ref_ref: {}", my_ref_ref);
+    println!("*my_ref_ref: {}", *my_ref_ref);
+
+    println!("----");
+
+    let my_ref_str = String::from("Boris"); // 字符串
+    let my_ref_str_ref = &my_ref_str; // 指向一个地址
+    println!("my_ref_str: {}", my_ref_str);
+    println!("&my_ref_str: {}", &my_ref_str);
+    println!("my_ref_str_ref: {}", my_ref_str_ref);
+    println!("*my_ref_str_ref: {}", *my_ref_str_ref);
+
+    println!("----");
+
+    let my_ref_str_ice = "Cookies and Cream"; // 字符串引用
+    let my_ref1 = my_ref_str_ice; // 字符串引用
+    let my_ref2 = &my_ref_str_ice; // 字符串引用的引用
+    println!("my_ref1: {}", my_ref1);
+    println!("my_ref2: {}", my_ref2);
+
+    // 引用函数
+    let my_ref3 = 6;
+    let my_ref4 = String::from("Cookies and Cream");
+    print_my_value(my_ref3);
+    print_my_value_string(my_ref4);
+    // println!("{my_ref4}"); // 不可以再次引用，因为值已经被先使用了
+
+}
+
+fn print_my_value(value: i32) {
+    println!("value is: {}", value);
+}
+
+fn print_my_value_string(value: String) {
+    println!("value is: {}", value);
 }
