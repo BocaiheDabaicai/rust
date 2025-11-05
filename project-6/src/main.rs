@@ -80,6 +80,52 @@ fn main() {
     print_my_value_string(my_ref4);
     // println!("{my_ref4}"); // 不可以再次引用，因为值已经被先使用了
 
+    // 可变参数
+    let burger = String::from("burger");
+    add_fries(burger);
+
+    // 函数返回值
+    let cake = back_cake();
+    println!("I have a {} cake now.", cake);
+
+    let mut current_meal = String::new();
+    current_meal = add_flour(current_meal);
+    current_meal = add_sugar(current_meal);
+    current_meal = add_salt(current_meal);
+
+    println!("{}",current_meal);
+
+    // test
+    let is_concert = false;
+    let is_event = is_concert;
+    // 所有权没有转移
+    println!("is_concert: {}", is_concert);
+    println!("is_event: {}", is_event);
+
+    let sushi = "Salmon";
+    let dinner = sushi;
+    // 所有权没有转移
+    println!("sushi: {}", sushi);
+    println!("dinner: {}", dinner);
+
+    let sushi2 = String::from("Salmon");
+    let dinner2 = sushi2;
+    // 所有权发生转移
+    // println!("sushi2: {}", sushi2);
+    println!("dinner2: {}", dinner2);
+
+    let mut clear_str = String::from("clearclear");
+
+    println!("Before clear_str: {}",clear_str);
+    clear_str.clear();
+    println!("After clear_str: {}",clear_str);
+
+    let clear_str2 = String::from("clearclear2");
+    eat_meal(clear_str2);
+
+    let mut clear_str3 = String::from("We have a cup of apples.");
+    clear_str3 = eat_meal_return(clear_str3);
+    println!("now clear_str3 is empty: {}",clear_str3);
 }
 
 fn print_my_value(value: i32) {
@@ -88,4 +134,51 @@ fn print_my_value(value: i32) {
 
 fn print_my_value_string(value: String) {
     println!("value is: {}", value);
+}
+
+fn add_fries(mut meal: String) {
+    meal.push_str(" and fries");
+
+    println!("{}", meal);
+}
+
+fn back_cake() -> String {
+    // 方式一
+    /*let cake = String::from("Cookies and Cream");
+
+    return cake;*/
+
+    // 方式二
+    // return String::from("Cookies and Cream");
+
+    // 方式三
+    String::from("Cookies and Cream")
+}
+
+fn add_flour(mut meal: String) -> String {
+    meal.push_str("Add flour ");
+    return meal
+}
+
+fn add_sugar(mut meal: String)-> String{
+    meal.push_str("Add sugar ");
+    return meal
+}
+fn add_salt(mut meal: String)-> String{
+    meal.push_str("Add salt ");
+    return meal
+}
+
+fn eat_meal(mut meal:String){
+    println!("Before meal: {}",meal);
+    meal.clear();
+    println!("After meal: {}",meal);
+}
+
+fn eat_meal_return(mut meal:String) -> String {
+    println!("Before meal: {}",meal);
+    meal.clear();
+    println!("After meal: {}",meal);
+
+    return meal;
 }
