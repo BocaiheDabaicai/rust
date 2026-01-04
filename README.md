@@ -1217,6 +1217,24 @@ fn eat_meal_return(mut meal:String) -> String {
 - 悬空引用（空指针）
 - 对数组和元组进行引用
 
+特别地，这两种方式可以对字符串对象进行引用
+
+1. 设置可修改的字符串对象
+
+2. 设置对字符串对象的可修改引用
+
+代码如下：
+
+```rust
+fn make_empty(mut content: String) {
+    content.clear()
+}
+ 
+fn make_empty(content: &mut String) {
+    content.clear()
+}
+```
+
 ##### 代码区
 
 ```rust
