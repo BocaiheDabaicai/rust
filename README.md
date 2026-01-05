@@ -1222,6 +1222,7 @@ fn eat_meal_return(mut meal:String) -> String {
 1. 设置可修改的字符串对象
 
 2. 设置对字符串对象的可修改引用
+- 一个字符串对象可以拥有多个不可变引用变量和同时只能拥有一个可变引用变量
 
 代码如下：
 
@@ -1229,7 +1230,7 @@ fn eat_meal_return(mut meal:String) -> String {
 fn make_empty(mut content: String) {
     content.clear()
 }
- 
+
 fn make_empty(content: &mut String) {
     content.clear()
 }
