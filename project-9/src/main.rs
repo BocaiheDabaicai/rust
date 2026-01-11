@@ -69,6 +69,42 @@ fn main() {
     println!("name: {}", mocha_shorthand.name);
     println!("price: {}", mocha_shorthand.price);
     println!("is_available: {}", mocha_shorthand.is_available);
+
+    // 7. 数据结构更新语法
+    let mocha_camel = Coffee {
+        name: String::from("Camel Coffee"),
+        ..mocha_shorthand // 引用该对象复制它 除name 以外 的所有属性进行使用
+    };
+
+    /*let mocha_camel = Coffee {
+        ..mocha_shorthand   // 会将 该对象的属性值及所有权全部转移
+    };*/
+
+    /*let mocha_camel = Coffee {
+        name:mocha_shorthand.name.clone(), // 修正方法
+        ..mocha_shorthand
+    };*/
+
+    println!("-- mocha_camel --");
+    println!("name: {}", mocha_camel.name);
+    println!("price: {}", mocha_camel.price);
+    println!("is_available: {}", mocha_camel.is_available);
+
+    /*println!("-- mocha_shorthand --");
+    println!("name: {}", mocha_shorthand.name);
+    println!("price: {}", mocha_shorthand.price);
+    println!("is_available: {}", mocha_shorthand.is_available);*/
+
+    // 8. 传递数据结构给函数
+    let mut mocha_function = make_coffee(String::from("Popping Coffee"), 21.19, false);
+    // drink_coffee(mocha_function);
+    // drink_coffee_two(&mocha_function);
+    drink_coffee_three(&mut mocha_function);
+
+    /*println!("-- mocha_function --");   // 所有权已经被转移，后续无法使用
+    println!("name: {}", mocha_function.name);
+    println!("price: {}", mocha_function.price);
+    println!("is_available: {}", mocha_function.is_available);*/
 }
 
 fn make_coffee(name: String, price: f64, is_available: bool) -> Coffee {
@@ -84,4 +120,34 @@ fn make_coffee(name: String, price: f64, is_available: bool) -> Coffee {
         price,
         is_available,
     }
+}
+
+fn drink_coffee(mut coffee: Coffee) {
+    // 数据结构对象本身不需要标注 mut
+    println!("-- coffee function --");
+    println!("name: {}", coffee.name);
+    println!("price: {}", coffee.price);
+    println!("is_available: {}", coffee.is_available);
+
+    coffee.is_available = true;
+    println!("Config is_available: {}", coffee.is_available);
+}
+
+fn drink_coffee_two(coffee: &Coffee) {
+    // 不可变引用
+    println!("-- coffee function --");
+    println!("name: {}", coffee.name);
+    println!("price: {}", coffee.price);
+    println!("is_available: {}", coffee.is_available);
+}
+
+fn drink_coffee_three(coffee: &mut Coffee) {
+    // 可变引用
+    println!("-- coffee function --");
+    println!("name: {}", coffee.name);
+    println!("price: {}", coffee.price);
+    println!("is_available: {}", coffee.is_available);
+
+    coffee.is_available = true;
+    println!("Config is_available: {}", coffee.is_available);
 }
