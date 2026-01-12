@@ -1,9 +1,41 @@
+// 9. 数据结构的debug - part1
+#[derive(Debug)] // 允许打印 数据结构 的规范表达
+
 // 1. 数据结构定义
 struct Coffee {
     // 命名规则：各单词首字母大写
     name: String,
     price: f64,
     is_available: bool,
+}
+
+// 10. 定义数据结构方法 - part1
+#[derive(Debug)]
+struct RoseSong {
+    title: String,
+    release_year: u32,
+    duration_secs: u32,
+}
+
+impl RoseSong {
+    // 声明数据结构方法
+    fn display_song_info(self: Self) {
+        // 传入方法一： self:RoseSong
+        // 传入方法二： self:Self: Self 表示 RoseSong，本处的数据结构类型
+        // 传入方法三： self
+        // 对数据结构体的数据引用
+        // part1 - 不可变数据结构值
+        println!("-- RoseSong --");
+        println!("title: {}", self.title);
+        println!("release_year: {}", self.release_year);
+        println!("duration_secs: {}", self.duration_secs);
+    }
+
+    fn double_length(mut self) {
+        self.duration_secs *= 2;
+        println!("Total Information: {:#?}", self);
+        // self.display_song_info();
+    }
 }
 
 fn main() {
@@ -105,6 +137,24 @@ fn main() {
     println!("name: {}", mocha_function.name);
     println!("price: {}", mocha_function.price);
     println!("is_available: {}", mocha_function.is_available);*/
+
+    // 9. 数据结构的debug
+    // #[allow(unused_variables)] 单行指令 - 允许存在未使用的变量
+    let mocha_debug = make_coffee(String::from("Debug Coffee"), 21.19, false);
+
+    println!("{:?}", mocha_debug);
+    println!("{:#?}", mocha_debug);
+
+    // 10. 定义数据结构方法
+    let rose_song_one = RoseSong {
+        title: String::from("Gone."),
+        release_year: 2021,
+        duration_secs: 207,
+    };
+
+    // rose_song_one.display_song_info(); // rose_song_one 的所有权转移到了这里
+
+    rose_song_one.double_length();
 }
 
 fn make_coffee(name: String, price: f64, is_available: bool) -> Coffee {
