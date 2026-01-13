@@ -18,8 +18,25 @@ struct RoseSong {
 }
 
 impl RoseSong {
+    // 14. 关联函数, 构造函数设计
+    fn new(title: String, release_year: u32, duration_secs: u32) -> Self {
+        // 返回值可以表达为：RoseSong, Self
+        // 如果不包含self，那么rust 会认为这是一个关联函数
+        /*RoseSong {
+            title,
+            release_year,
+            duration_secs,
+        }*/
+
+        Self {
+            title,
+            release_year,
+            duration_secs,
+        }
+    }
+
     // 声明数据结构方法
-    fn display_song_info(self: Self) {
+    /*fn display_song_info(self: Self) {
         // 传入方法一： self:RoseSong
         // 传入方法二： self:Self: Self 表示 RoseSong，本处的数据结构类型
         // 传入方法三： self
@@ -29,12 +46,44 @@ impl RoseSong {
         println!("title: {}", self.title);
         println!("release_year: {}", self.release_year);
         println!("duration_secs: {}", self.duration_secs);
-    }
+    }*/
 
-    fn double_length(mut self) {
+    /*fn double_length(mut self) {
         self.duration_secs *= 2;
         println!("Total Information: {:#?}", self);
         // self.display_song_info();
+    }*/
+    // 11. 返回所有权设计
+    fn display_song_info(self: &Self) {
+        // 传入方法一： self: &RoseSong
+        // 传入方法二： self: &Self: &Self 表示 RoseSong 的引用，引用本处的数据结构类型
+        // 传入方法三： &self
+        // 推荐写二、三方法，有利于数据结构名称维护，而不至于修改所有函数代码
+        // 对数据结构体的数据引用
+        // part1 - 不可变数据结构值
+        println!("-- RoseSong --");
+        println!("title: {}", self.title);
+        println!("release_year: {}", self.release_year);
+        println!("duration_secs: {}", self.duration_secs);
+        println!("Year since Release: {}", self.years_since_release());
+    }
+
+    fn double_length(self: &mut Self) {
+        // 对实例的可变引用
+        // 传入方法一： self:&mut RoseSong
+        // 传入方法二： self:&mut Self: &Self
+        // 传入方法三： &mut self
+        self.duration_secs *= 2;
+    }
+
+    // 12. 函数引入多个参数
+    fn is_longer_that(self: &Self, other: &Self) -> bool {
+        self.duration_secs > other.duration_secs
+    }
+
+    // 13. 函数中调用函数
+    fn years_since_release(self: &Self) -> u32 {
+        2029 - self.release_year
     }
 }
 
@@ -146,7 +195,7 @@ fn main() {
     println!("{:#?}", mocha_debug);
 
     // 10. 定义数据结构方法
-    let rose_song_one = RoseSong {
+    let mut rose_song_one = RoseSong {
         title: String::from("Gone."),
         release_year: 2021,
         duration_secs: 207,
@@ -154,7 +203,35 @@ fn main() {
 
     // rose_song_one.display_song_info(); // rose_song_one 的所有权转移到了这里
 
+    // rose_song_one.double_length();
+
+    // 11. 返回所有权设计
+    rose_song_one.display_song_info();
     rose_song_one.double_length();
+
+    // 12. 函数引入多个参数
+    let rose_song_two = RoseSong {
+        title: String::from("Two box Seconds."),
+        release_year: 2026,
+        duration_secs: 128,
+    };
+
+    if rose_song_one.is_longer_that(&rose_song_two) {
+        println!("The compare result is: rose_song_one win !!!");
+    } else {
+        println!("The compare result is: rose_song_two win !!!");
+    }
+
+    // 13. 函数中调用函数
+    rose_song_two.display_song_info();
+
+    // 14. 关联函数, 构造函数设计
+    /*
+        关联函数
+        内置函数，可以引用对象本身
+    */
+    let rose_song_three = RoseSong::new(String::from("Three Candy."), 2027, 256);
+    rose_song_three.display_song_info();
 }
 
 fn make_coffee(name: String, price: f64, is_available: bool) -> Coffee {
