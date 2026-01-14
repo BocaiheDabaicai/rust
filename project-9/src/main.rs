@@ -17,6 +17,14 @@ struct RoseSong {
     duration_secs: u32,
 }
 
+// 16. 构建模式 - part1
+#[derive(Debug)]
+struct Computer {
+    cpu: String,
+    memory: u32,
+    hard_drive_capacity: u32,
+}
+
 impl RoseSong {
     // 14. 关联函数, 构造函数设计
     fn new(title: String, release_year: u32, duration_secs: u32) -> Self {
@@ -84,6 +92,99 @@ impl RoseSong {
     // 13. 函数中调用函数
     fn years_since_release(self: &Self) -> u32 {
         2029 - self.release_year
+    }
+}
+
+// 15. 多模块接口
+impl RoseSong {
+    // 可以存在多个相关于一个数据结构的接口模块
+    fn display_song_info_two(self: &Self) {
+        println!("-- RoseSong Version 2.0 --");
+        println!("title: {}", self.title);
+        println!("release_year: {}", self.release_year);
+        println!("duration_secs: {}", self.duration_secs);
+        println!("Year since Release: {}", self.years_since_release());
+    }
+}
+
+// 16. 构建模式 - part2
+impl Computer {
+    fn new(cpu: String, memory: u32, hard_drive_capacity: u32) -> Self {
+        Self {
+            cpu,
+            memory,
+            hard_drive_capacity,
+        }
+    }
+
+    fn upgrade_cpu(self: &mut Self, new_cpu: String) -> &mut Self {
+        self.cpu = new_cpu;
+        self
+    }
+
+    fn upgrade_memory(self: &mut Self, new_memory: u32) -> &mut Self {
+        self.memory = new_memory;
+        self
+    }
+
+    fn upgrade_hard_drive_capacity(self: &mut Self, new_hard_drive_capacity: u32) -> &mut Self {
+        self.hard_drive_capacity = new_hard_drive_capacity;
+        self
+    }
+
+    fn print_computer_info(self: &Self) {
+        println!("-- Computer --");
+        println!("cpu: {}", self.cpu);
+        println!("memory: {}", self.memory);
+        println!("hard_drive_capacity: {}", self.hard_drive_capacity);
+    }
+}
+
+// 17. 元组数据结构 - par1
+struct ShortDuration(u32, u32);
+struct LongDuration(u32, u32);
+
+// 18. 单元数据结构 - part1
+struct Empty; // 这是一个单元数据结构
+
+// 19. test - part1
+#[derive(Debug)]
+struct Flight {
+    origin: String,
+    destination: String,
+    price: f64,
+    passengers: u32,
+}
+
+impl Flight {
+    fn new(origin: String, destination: String, price: f64, passengers: u32) -> Self {
+        Self {
+            origin,
+            destination,
+            price,
+            passengers,
+        }
+    }
+
+    fn change_destination(self: &mut Self, new_destination: String) -> &mut Self {
+        self.destination = new_destination;
+        self
+    }
+
+    fn increase_price(self: &mut Self) -> &mut Self {
+        self.price *= 1.2;
+        self
+    }
+
+    fn itinerary(self: &mut Self) -> &mut Self {
+        println!("-- Flight --");
+        println!(
+            "origin: {} -> destination: {}",
+            self.origin, self.destination
+        );
+        println!("price: {}", self.price);
+        println!("passengers: {}", self.passengers);
+        self
     }
 }
 
@@ -232,6 +333,75 @@ fn main() {
     */
     let rose_song_three = RoseSong::new(String::from("Three Candy."), 2027, 256);
     rose_song_three.display_song_info();
+
+    // 15. 多模块接口
+    rose_song_three.display_song_info_two();
+
+    // 16. 构建模式
+    let mut computer = Computer {
+        cpu: String::from("Intel"),
+        memory: 16,
+        hard_drive_capacity: 1024,
+    };
+
+    computer.print_computer_info();
+
+    // 实现方法一
+    /*computer.upgrade_cpu(String::from("Amd"));
+    computer.upgrade_memory(32);
+    computer.upgrade_hard_drive_capacity(4096);*/
+
+    // 实现方法二
+    computer
+        .upgrade_cpu(String::from("Amd"))
+        .upgrade_memory(32)
+        .upgrade_hard_drive_capacity(4096);
+
+    computer.print_computer_info();
+
+    // 17. 元组数据结构
+    /*
+        从名称上区分数据，从而避免原始元组数据类型相同的问题
+        以及，函数参数类型命名上的问题
+        这个问题已经得到官方的修复和错误捕捉
+    */
+    let work_shift = ShortDuration(8, 0);
+    println!("{} hour {} minutes", work_shift.0, work_shift.1);
+
+    let era = LongDuration(5, 3);
+    println!("{} year {} month", era.0, era.1);
+
+    // let era_raw = (5,3);
+    // go_to_work(era_raw);
+    go_to_work(era);
+
+    // 18. 单元数据结构
+    let empty = (); // 这是一个单元结构体
+    let empty_struct = Empty; // 这是一个单元结构体
+
+    // 19. test
+    let mut flight_one = Flight::new(
+        String::from("BeiJing"),
+        String::from("ShangHai"),
+        1284.231,
+        54,
+    );
+
+    println!("Origin Info: {:#?}", flight_one);
+
+    flight_one
+        .change_destination(String::from("HongKong"))
+        .increase_price()
+        .itinerary();
+
+    let mut flight_two = Flight {
+        origin: String::from("ChongQing"),
+        destination: String::from("GuangZhou"),
+        ..flight_one
+    };
+
+    println!("Origin Info: {:#?}", flight_two);
+    flight_two.itinerary();
 }
 
 fn make_coffee(name: String, price: f64, is_available: bool) -> Coffee {
@@ -277,4 +447,8 @@ fn drink_coffee_three(coffee: &mut Coffee) {
 
     coffee.is_available = true;
     println!("Config is_available: {}", coffee.is_available);
+}
+
+fn go_to_work(value: LongDuration) {
+    println!("Test question: {} hours {} minutes", value.0, value.1);
 }
