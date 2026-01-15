@@ -1568,6 +1568,8 @@ fn print_length(reference: &[i32]) {
 
 5. 声明数据结构方法函数的关键字`impl`
 
+6. **使用实例对象，会导致所有权转移，所以一般就使用实例对象引用**
+
 ##### 代码区
 
 ```rust
@@ -2025,9 +2027,14 @@ fn drink_coffee_three(coffee: &mut Coffee) {
 fn go_to_work(value: LongDuration) {
     println!("Test question: {} hours {} minutes", value.0, value.1);
 }
-
 ```
 
 ---
 
 #### 枚举
+
+- 介绍枚举
+
+- 枚举关联值 part1
+
+- 枚举关联值 part2
