@@ -2038,3 +2038,9 @@ fn go_to_work(value: LongDuration) {
 - 枚举关联值 part1
 
 - 枚举关联值 part2
+
+- 枚举存储的简单描述
+
+- 结构变量
+
+- 枚举中的枚举
