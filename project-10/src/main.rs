@@ -48,6 +48,38 @@ enum Beans {
     Black,
 }
 
+// 7. 匹配关键字 - part1
+enum OperationSystem {
+    Windows,
+    MacOs,
+    Linux,
+}
+
+// 9. 匹配关键字 - part3
+enum LaundryCycle {
+    Cold,
+    Hot { temperature: u32 },
+    Delicate(String),
+}
+
+// 10. 在枚举中定义方法 - part1
+impl LaundryCycle {
+    fn wash_laundry(self: &Self) {
+        match self {
+            LaundryCycle::Cold => println!("LaundryCycle is Cold"),
+            LaundryCycle::Hot { temperature } => {
+                println!(
+                    "LaundryCycle is temperature, its value is : {}",
+                    temperature
+                );
+            }
+            LaundryCycle::Delicate(fabric) => {
+                println!("LaundryCycle is String, its value is : {}", fabric);
+            }
+        }
+    }
+}
+
 fn main() {
     // 1. 介绍枚举
     let first_card = CardSuit::Diamonds;
@@ -112,4 +144,71 @@ fn main() {
     println!("lunch: {:#?}", lunch);
     println!("dinner: {:#?}", dinner);
     println!("meal: {:#?}", meal);
+
+    // 7. 匹配关键字 - part1
+    let number = 5;
+
+    match number {
+        5 => println!("The number is 5"),
+        8 => println!("The number is 8"),
+        _ => println!("The number is not 5 or 8"),
+    }
+
+    let computer_1 = OperationSystem::Linux;
+    let computer_2 = OperationSystem::Windows;
+    let computer_3 = OperationSystem::MacOs;
+
+    println!("{}", years_since_release(computer_1));
+    println!("{}", years_since_release(computer_2));
+    println!("{}", years_since_release(computer_3));
+
+    // 8. 匹配关键字 - part2
+    // 扩展匹配模块，在 match 模块中实现打印和返回值
+
+    // 9. 匹配关键字 - part3
+    let type_1 = LaundryCycle::Cold;
+    let type_2 = LaundryCycle::Hot { temperature: 31 };
+    let type_3 = LaundryCycle::Delicate(String::from("Beautiful!!"));
+
+    wash_laundry(&type_1);
+    wash_laundry(&type_2);
+    wash_laundry(&type_3);
+
+    // 10. 在枚举中定义方法
+    type_1.wash_laundry();
+    type_2.wash_laundry();
+    type_3.wash_laundry();
+}
+
+fn years_since_release(os: OperationSystem) -> u32 {
+    // 会要求覆盖所有的枚举属性
+    match os {
+        OperationSystem::Windows => {
+            println!("The computer System is windows");
+            39
+        }
+        OperationSystem::MacOs => {
+            println!("The computer System is MacOs");
+            21
+        }
+        OperationSystem::Linux => {
+            println!("The computer System is MacOs");
+            7
+        }
+    }
+}
+
+fn wash_laundry(cycle: &LaundryCycle) {
+    match cycle {
+        LaundryCycle::Cold => println!("LaundryCycle is Cold"),
+        LaundryCycle::Hot { temperature } => {
+            println!(
+                "LaundryCycle is temperature, its value is : {}",
+                temperature
+            );
+        }
+        LaundryCycle::Delicate(fabric) => {
+            println!("LaundryCycle is String, its value is : {}", fabric);
+        }
+    }
 }
