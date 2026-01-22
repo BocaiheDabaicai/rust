@@ -80,6 +80,54 @@ impl LaundryCycle {
     }
 }
 
+// 11. 匹配关键字 - part4
+#[derive(Debug)]
+enum OnlineOrderStatus {
+    Ordered,
+    Packed,
+    Shipped,
+    Delivered,
+}
+
+impl OnlineOrderStatus {
+    fn check(self: &Self) {
+        match self {
+            OnlineOrderStatus::Ordered | OnlineOrderStatus::Packed => {
+                println!("Your Item has been delivered for Ordered or Packed")
+            }
+            other_status => {
+                println!("Your Item has been delivered for Shipped or Delivered, {other_status:#?}")
+            }
+        }
+    }
+}
+
+// 11. 匹配关键字 - part5
+enum Milk {
+    Lowfat(i32),
+    Whole,
+    NonDairy { kind: String },
+}
+
+impl Milk {
+    fn drink(self: &Self) {
+        match self {
+            Milk::Lowfat(2) => {
+                println!("The milk is lowfat with 2.")
+            }
+            Milk::Lowfat(percent) => {
+                println!("The milk is lowfat with {}.", percent)
+            }
+            Milk::Whole => {
+                println!("The milk is whole fat.");
+            }
+            other_milk => {
+                println!("The milk is other_milk.");
+            }
+        }
+    }
+}
+
 fn main() {
     // 1. 介绍枚举
     let first_card = CardSuit::Diamonds;
@@ -178,6 +226,74 @@ fn main() {
     type_1.wash_laundry();
     type_2.wash_laundry();
     type_3.wash_laundry();
+
+    // 11. 匹配关键字 - part4
+    let status_1 = OnlineOrderStatus::Ordered;
+    let status_2 = OnlineOrderStatus::Shipped;
+
+    status_1.check();
+    status_2.check();
+
+    // 11. 匹配关键字 - part5
+    let milk_1 = Milk::Lowfat(2);
+    let milk_2 = Milk::Lowfat(23);
+    let milk_3 = Milk::Whole;
+
+    milk_1.drink();
+    milk_2.drink();
+    milk_3.drink();
+
+    // 12. if 结构运用
+    /*
+        条件中就是判断左边变量与右边变量是否一致
+        本处没有返回值
+    */
+    let milk_if_1 = Milk::Whole;
+    let milk_if_2 = Milk::Lowfat(12);
+    let milk_if_3 = Milk::NonDairy {
+        kind: String::from("Plant"),
+    };
+
+    let data_milk_1 = if let Milk::Whole = milk_if_1 {
+        println!("The milk is Milk::Whole.");
+    } else {
+        println!("The milk is other Milk.");
+    };
+
+    let data_milk_2 = if let Milk::Whole = milk_if_2 {
+        println!("The milk is Milk::Whole.");
+    } else {
+        println!("The milk is other Milk.");
+    };
+
+    let data_milk_3 = if let Milk::NonDairy { kind } = milk_if_3 {
+        println!("The milk is Milk::NonDairy{{{}}}.", kind);
+    } else {
+        println!("The milk is other Milk.");
+    };
+
+    println!("data_milk_1 : {:?}", data_milk_1);
+    println!("data_milk_2 : {:?}", data_milk_2);
+    println!("data_milk_3 : {:?}", data_milk_3);
+
+    // 13. if 与 else 结构运用
+    let milk_if_4 = Milk::Lowfat(2);
+
+    // 相等时 值会扩展出范围区域
+    let Milk::Lowfat(percent) = milk_if_4 else {
+        println!("The milk is wrong Milk.");
+        return;
+    };
+
+    println!("{percent} % Lowfat milk");
+
+    // 不相等时 值不会扩展出范围区域
+    let Milk::NonDairy { kind } = milk_if_4 else {
+        println!("The milk is wrong Milk.");
+        return;
+    };
+
+    println!("{kind} % Lowfat milk");
 }
 
 fn years_since_release(os: OperationSystem) -> u32 {

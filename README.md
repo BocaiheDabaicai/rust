@@ -2050,3 +2050,13 @@ fn go_to_work(value: LongDuration) {
 - 匹配关键字 part2
 
 - 匹配关键字 part3
+
+- 在枚举中定义方法
+
+- 匹配关键字 part4
+
+- 匹配关键字 part5
+
+- if 结构运用
+
+- if 与 else 结构运用
