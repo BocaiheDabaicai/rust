@@ -128,6 +128,34 @@ impl Milk {
     }
 }
 
+// test
+#[derive(Debug)]
+enum Tier {
+    Gold,
+    Silver,
+    Platinum,
+}
+#[derive(Debug)]
+enum Subscription {
+    Free,
+    Basic(f64, u32),
+    Premium { tier: Tier },
+}
+
+impl Subscription {
+    fn summarize(self: &Self) {
+        match self {
+            Subscription::Free => println!("You have limited access to the site"),
+            Subscription::Basic(price, months) => println!(
+                "You have limited access to the site's premium features for {price} for {months} months"
+            ),
+            Subscription::Premium { tier } => println!(
+                "You have full access to the site's premium features. Your tier is {tier:?}"
+            ),
+        }
+    }
+}
+
 fn main() {
     // 1. 介绍枚举
     let first_card = CardSuit::Diamonds;
@@ -280,7 +308,7 @@ fn main() {
     let milk_if_4 = Milk::Lowfat(2);
 
     // 相等时 值会扩展出范围区域
-    let Milk::Lowfat(percent) = milk_if_4 else {
+    /*let Milk::Lowfat(percent) = milk_if_4 else {
         println!("The milk is wrong Milk.");
         return;
     };
@@ -293,7 +321,16 @@ fn main() {
         return;
     };
 
-    println!("{kind} % Lowfat milk");
+    println!("{kind} % Lowfat milk");*/
+
+    // test
+    let instance_1 = Subscription::Free;
+    let instance_2 = Subscription::Premium { tier: Tier::Gold};
+    let instance_3 = Subscription::Basic(12.4,6);
+
+    instance_1.summarize();
+    instance_2.summarize();
+    instance_3.summarize();
 }
 
 fn years_since_release(os: OperationSystem) -> u32 {
