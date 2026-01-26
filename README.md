@@ -2451,9 +2451,12 @@ fn wash_laundry(cycle: &LaundryCycle) {
         }
     }
 }
-
 ```
 
 ---
 
-#### Generic
+#### 泛型
+
+- 泛型介绍
+  
+  - 社区一般将字母`T`称之为泛型类型
