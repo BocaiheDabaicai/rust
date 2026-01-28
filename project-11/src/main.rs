@@ -30,6 +30,45 @@ impl TreasureChest<[&str; 3]> {
     }
 }
 
+// 6. 接入模块中的泛型 - part2
+// 接入任意类型的数据
+impl<T> TreasureChest<T> {
+    fn capital_captain(&self) -> String {
+        self.captain.to_uppercase()
+    }
+}
+
+// 7. 接入枚举中的泛型 - part1
+#[derive(Debug)]
+enum Cheesesteak<T> {
+    Plain,
+    Topping(T),
+}
+// 8. test - part1
+#[derive(Debug)]
+enum DigitalContent {
+    AudioFile,
+    VideoFile,
+}
+
+#[derive(Debug)]
+struct ChatMessage<T> {
+    content: T,
+    time: String,
+}
+
+impl ChatMessage<DigitalContent> {
+    fn consume_entertainment(&self) {
+        println!("Watching the {:#?}", self.content);
+    }
+}
+
+impl<T> ChatMessage<T> {
+    fn retrieve_time(&self) -> String {
+        self.time.clone()
+    }
+}
+
 fn main() {
     // 1. 泛型介绍
     println_self(identity(1));
@@ -73,11 +112,53 @@ fn main() {
     // println_self(treasure_chest_2);
 
     // 5. 接入模块中的泛型
-    println!("treasure_chest_1.treasure: {}",&treasure_chest_1.treasure);
+    println!("treasure_chest_1.treasure: {}", &treasure_chest_1.treasure);
     treasure_chest_1.clean_treasure();
-    println!("treasure_chest_1.treasure: {}",&treasure_chest_1.treasure);
+    println!("treasure_chest_1.treasure: {}", &treasure_chest_1.treasure);
 
     println_self(treasure_chest_2.amount_treasure());
+
+    // 6. 接入模块中的泛型 - part2
+    println!(
+        "treasure_chest_1.captain: {}",
+        &treasure_chest_1.capital_captain()
+    );
+
+    // 7. 接入枚举中的泛型
+    let data_enum_1 = Cheesesteak::Topping(String::from("Mushroom"));
+    let data_enum_2 = Cheesesteak::Topping("Mushroom small");
+    let data_enum_3 = Cheesesteak::Topping("Mushroom small toString".to_string());
+    let data_enum_4 = Cheesesteak::Topping(&data_enum_3);
+    let mut data_enum_5: Cheesesteak<String> = Cheesesteak::Plain;
+    data_enum_5 = Cheesesteak::Topping("sadqq1213".to_string());
+
+    println!("{:?}", data_enum_1);
+    println!("{:?}", data_enum_2);
+    println!("{:?}", data_enum_3);
+    println!("{:?}", data_enum_4);
+    println!("{:?}", data_enum_5);
+
+    // 8. test
+    let data_1 = ChatMessage {
+        content: "Mushroom",
+        time: String::from("12:00"),
+    };
+
+    let data_2 = ChatMessage {
+        content: "Night".to_string(),
+        time: String::from("13:14"),
+    };
+
+    let data_3 = ChatMessage {
+        content: DigitalContent::AudioFile,
+        time: String::from("21:33"),
+    };
+
+    data_3.consume_entertainment();
+
+    println!("{:?}", data_1.retrieve_time());
+    println!("{:?}", data_2.retrieve_time());
+    println!("{:?}", data_3.retrieve_time());
 }
 
 // 1. 泛型介绍 - part1
