@@ -2665,9 +2665,14 @@ fn make_tuple_two<T>(first: T, second: T) -> (T, T) {
 fn make_tuple_three<T, U>(first: T, second: U) -> (T, U) {
     (first, second)
 }
-
 ```
 
 ---
 
 #### 可选的结果枚举（枚举进阶）
+
+- 可选枚举
+
+- 可选枚举实例
+
+- 解包和期待的方法
