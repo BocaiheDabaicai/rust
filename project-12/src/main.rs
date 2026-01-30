@@ -33,8 +33,28 @@ fn main() {
 
     // let data_enum_14 = data_enum_10.expect("Have no get a value."); // 期待值会进行解包处理，但在出错时打印文字描述
     // println_self(&data_enum_14);
+
+    // 4. 枚举匹配关键字
+    let data_enum_14: Option<&String> = data_enum_8.get(2);
+
+    match data_enum_14 {
+        Option::Some(instrument) => println!("Match Result: {:?}", instrument),
+        Option::None => println!("Match Result: None"),
+    }
+
+    play(data_enum_8.get(1));
+    play(data_enum_8.get(12));
+    
+    // 5. 从函数中返回枚举
 }
 
 fn println_self<T: std::fmt::Debug>(value: &T) {
     println!("{:?}", value);
+}
+
+fn play(instrument_option: Option<&String>) {
+    match instrument_option {
+        Option::Some(instrument) => println!("Func Match Result: {:?}", instrument),
+        Option::None => println!("Func Match Result: None"),
+    }
 }

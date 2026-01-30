@@ -2676,3 +2676,7 @@ fn make_tuple_three<T, U>(first: T, second: U) -> (T, U) {
 - 可选枚举实例
 
 - 解包和期待的方法
+
+- 枚举匹配关键字
+
+- 从函数中返回枚举
