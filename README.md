@@ -2680,3 +2680,9 @@ fn make_tuple_three<T, U>(first: T, second: U) -> (T, U) {
 - 枚举匹配关键字
 
 - 从函数中返回枚举
+
+- 顶级可选枚举
+
+- 解构或方法
+
+- 源头构建 Option 对象

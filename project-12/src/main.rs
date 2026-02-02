@@ -1,3 +1,26 @@
+// 8. 源头构建 Option 对象 - part1
+#[derive(Debug, Copy, Clone)]
+enum MyOption<T> {
+    Some(T),
+    None,
+}
+
+impl<T> MyOption<T> {
+    fn unwarp(self) -> T {
+        match self {
+            MyOption::Some(value) => value,
+            MyOption::None => panic!("Have no value."),
+        }
+    }
+
+    fn unwarp_or(self, fallback_value: T) -> T {
+        match self {
+            MyOption::Some(value) => value,
+            MyOption::None => fallback_value,
+        }
+    }
+}
+
 fn main() {
     // 1. 可选枚举
     let data_enum_1 = Option::Some(5);
@@ -44,8 +67,44 @@ fn main() {
 
     play(data_enum_8.get(1));
     play(data_enum_8.get(12));
-    
+
     // 5. 从函数中返回枚举
+    let availability_1 = is_item_in_stock(true, true);
+    let availability_2 = is_item_in_stock(true, false);
+    let availability_3 = is_item_in_stock(false, false);
+
+    println_self(&availability_1);
+    println_self(&availability_2);
+    println_self(&availability_3);
+
+    match availability_1 {
+        // Some(value) => println!("Func Match Result: {:?}", value),  // 收集所有值
+        Some(true) => println!("Func Match Result: true"),
+        Some(false) => println!("Func Match Result: false"),
+        None => println!("Func Match Result: None"),
+    }
+
+    // 6. 顶级可选枚举
+    /*
+        简写方式：
+        - Option::Some() -> Some()
+        - Option::None -> None
+    */
+
+    // 7. 解构或方法
+    let availability_4 = Some(12);
+    let availability_5: Option<i32> = None; // 为 None 指明数据类型
+
+    println!("{}", availability_4.unwrap_or(0));
+    println!("{}", availability_5.unwrap_or(1));
+
+    // 8. 源头构建 Option 对象
+    let availability_6 = MyOption::Some(99);
+    let availability_7: MyOption<i32> = MyOption::None;
+
+    println!("{}", availability_6.unwarp());
+    // println!("{}",availability_7.unwarp()); // 因为没有数值，将引起恐慌
+    println!("{}",availability_7.unwarp_or(32));
 }
 
 fn println_self<T: std::fmt::Debug>(value: &T) {
@@ -56,5 +115,15 @@ fn play(instrument_option: Option<&String>) {
     match instrument_option {
         Option::Some(instrument) => println!("Func Match Result: {:?}", instrument),
         Option::None => println!("Func Match Result: None"),
+    }
+}
+
+fn is_item_in_stock(item_in_system: bool, item_is_in_stock: bool) -> Option<bool> {
+    if item_in_system && item_is_in_stock {
+        Option::Some(true)
+    } else if item_in_system {
+        Option::Some(false)
+    } else {
+        Option::None
     }
 }
