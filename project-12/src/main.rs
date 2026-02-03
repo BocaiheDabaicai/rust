@@ -104,7 +104,38 @@ fn main() {
 
     println!("{}", availability_6.unwarp());
     // println!("{}",availability_7.unwarp()); // 因为没有数值，将引起恐慌
-    println!("{}",availability_7.unwarp_or(32));
+    println!("{}", availability_7.unwarp_or(32));
+
+    // 9. 结果枚举
+    let data_enum_15: Result<i32, &str> = Result::Ok(12);
+    let data_enum_16: Result<i32, &str> = Result::Err("Something is wrong.");
+
+    // println!("{data_enum_15:?}");
+    // println!("{:?}",data_enum_15);
+
+    println_self(&data_enum_15);
+    println_self(&data_enum_16);
+
+    // 10. 结果枚举实例
+    let text = "50";
+    let text_number = text.parse::<i32>();
+
+    println!("{:?}", &text_number);
+
+    // 11. 从函数中返回结果枚举
+    // 本处我进行了解包以及错误处理
+    println!("divide result is: {:?}", divide(12.0, 4.0).unwrap_or(1.0));
+    println!("divide result is: {:?}", divide(12.0, 0.0).unwrap_or(0.0));
+
+    let result_enum_1 = divide(13.4, 1.2);
+
+    match result_enum_1 {
+        Ok(val) => println!("the Result is {}", val),
+        Err(message) => println!("Func Match Result: {:?}", message),
+    }
+
+    // 12. 结果方法
+    // 参见 11
 }
 
 fn println_self<T: std::fmt::Debug>(value: &T) {
@@ -125,5 +156,14 @@ fn is_item_in_stock(item_in_system: bool, item_is_in_stock: bool) -> Option<bool
         Option::Some(false)
     } else {
         Option::None
+    }
+}
+
+// 11. 从函数中返回结果枚举 - part1
+fn divide(numerator: f64, denominator: f64) -> Result<f64, String> {
+    if denominator == 0.0 {
+        Err(String::from("Denominator is zero."))
+    } else {
+        Ok(numerator / denominator)
     }
 }
