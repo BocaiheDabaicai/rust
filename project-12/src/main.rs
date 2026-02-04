@@ -21,6 +21,49 @@ impl<T> MyOption<T> {
     }
 }
 
+// 15. test - part1
+#[derive(Debug)]
+struct Food {
+    name: String,
+}
+#[derive(Debug)]
+struct Restaurant {
+    reservations: u32,
+    has_mice_infestation: bool,
+}
+
+impl Restaurant {
+    fn chef_special(&self) -> Option<Food> {
+        if self.has_mice_infestation {
+            return None;
+        }
+
+        if self.reservations < 12 {
+            Some(Food {
+                name: "Uni Sashimi".to_string(),
+            })
+        } else {
+            Some(Food {
+                name: "Strip Steak".to_string(),
+            })
+        }
+    }
+
+    fn deliver_burger(&self, address: &str) -> Result<Food, String> {
+        if self.has_mice_infestation {
+            return Err("Sorry, we have a mice problem.".to_string());
+        }
+
+        if address.is_empty() {
+            Err("No delivery address specified".to_string())
+        } else {
+            Ok(Food {
+                name: "Burger".to_string(),
+            })
+        }
+    }
+}
+
 fn main() {
     // 1. 可选枚举
     let data_enum_1 = Option::Some(5);
@@ -136,6 +179,46 @@ fn main() {
 
     // 12. 结果方法
     // 参见 11
+
+    // 13. 结果函数里的结构方法
+    println!("{:?}", operation(true));
+    println!("{:?}", operation(false));
+
+    let my_result = operation(true);
+    let content = match my_result {
+        Ok(message) => message.to_string(),
+        Err(error) => error.to_string(),
+    }; // 获得 Result 的解构结果
+
+    println!("{:?}", content);
+    println!("{:?}", my_result);
+
+    // 14. 循环结构
+    let mut data_enum_17 = vec!["asda", "ddxz111", "cjid115"];
+
+    while let Some(data) = data_enum_17.pop() {
+        println!("the data is :{:?}", data);
+    }
+
+    // 15. test
+
+    let restaurant_1 = Restaurant {
+        reservations: 11,
+        has_mice_infestation: true,
+    };
+
+    println!("{:?}", restaurant_1.chef_special());
+    println!("{:?}", restaurant_1.deliver_burger("123 Elm Street"));
+
+    let restaurant_2 = Restaurant {
+        reservations: 12,
+        has_mice_infestation: false,
+    };
+
+    println!("{:?}", restaurant_2.chef_special());
+    println!("{:?}", restaurant_2.deliver_burger(""));
+    println!("{:?}", restaurant_2.deliver_burger("332 EPL store"));
+
 }
 
 fn println_self<T: std::fmt::Debug>(value: &T) {
@@ -166,4 +249,11 @@ fn divide(numerator: f64, denominator: f64) -> Result<f64, String> {
     } else {
         Ok(numerator / denominator)
     }
+}
+
+// 13. 结果函数里的结构方法 - part1
+// 这样的设计方法是为了避免所有权被转移
+// 同时实现原对象获得结果对象，而不是结果
+fn operation(success: bool) -> Result<&'static str, &'static str> {
+    if success { Ok("Success") } else { Err("Error") }
 }
