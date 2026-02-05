@@ -2973,9 +2973,14 @@ fn divide(numerator: f64, denominator: f64) -> Result<f64, String> {
 fn operation(success: bool) -> Result<&'static str, &'static str> {
     if success { Ok("Success") } else { Err("Error") }
 }
-
 ```
 
 ---
 
-#### Vec数组
+#### 向量
+
+- 创建向量
+
+- 增加元素、删除元素
+
+- 读取元素
