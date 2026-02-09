@@ -52,4 +52,73 @@ fn main() {
         "Get data 4 with function: {:?}",
         array_6.get(4).unwrap_or(&"error")
     ); // 包含错误处理的解构处理
+
+    // 4. get方法读取元素
+    // 避免了索引不存在的问题
+
+    match array_6.get(2) {
+        None => println!("None is happen."),
+        Some(value) => println!("Get data 3 with function: {:?}", value),
+    }
+
+    match array_6.get(7) {
+        None => println!("None is happen."),
+        Some(value) => println!("Get data 3 with function: {:?}", value),
+    }
+
+    // 5. 向量的所有权
+    /*
+        可以存在多个不可变引用和一个可变引用
+        在创建一个可变引用后，原变量无法执行 push 等修改向量内部的操作
+    */
+    let array_7 = vec![
+        String::from("djuue388"),
+        String::from("ogipp842"),
+        String::from("pohlk112"),
+    ];
+    let reference_1 = &array_7[0];
+    let reference_2 = &array_7[0];
+
+    println!("reference_1: {:?}", &reference_1);
+    println!("reference_2: {:?}", &reference_2);
+
+    // 6. 写入向量元素
+    let mut array_8 = vec![
+        String::from("djuue388"),
+        String::from("ogipp842"),
+        String::from("pohlk112"),
+    ];
+
+    // let copy_1 = array_8;
+
+    array_8.push(String::from("ghurh664"));
+
+    let reference_3 = &mut array_8[0];
+    reference_3.push_str(" and hjjui998");
+
+    println!("reference_3: {:?}", &reference_3);
+
+    println!("Final Array is: {:?}", array_8);
+
+    // 7. 向量幕后的工作流程
+    let mut seasons = Vec::<&str>::with_capacity(4);
+
+    println!("seasons length is: {}", seasons.len());
+    println!("seasons capacity is: {}", seasons.capacity());
+    println!("seasons data is: {:?}", seasons);
+
+    seasons.push("Spring");
+    seasons.push("Summer");
+    seasons.push("Fall");
+    seasons.push("Winter");
+
+    println!("seasons length is: {}", seasons.len());
+    println!("seasons capacity is: {}", seasons.capacity());
+    println!("seasons data is: {:?}", seasons);
+
+    seasons.push("Other"); // 向量支持容量扩展
+
+    println!("seasons length is: {}", seasons.len());
+    println!("seasons capacity is: {}", seasons.capacity());
+    println!("seasons data is: {:?}", seasons);
 }
