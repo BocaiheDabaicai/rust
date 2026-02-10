@@ -1,3 +1,35 @@
+#[derive(Debug)]
+struct File {
+    name: String,
+}
+
+#[derive(Debug)]
+struct Folder {
+    name: String,
+    contents: Vec<File>,
+}
+
+impl Folder {
+    fn new(name: String) -> Self {
+        Self {
+            name,
+            contents: Vec::new(), // 另一种写法 vec![]
+        }
+    }
+
+    fn create_file(&mut self, name: String) {
+        self.contents.push(File { name })
+    }
+
+    fn delete_file(&mut self, index: usize) -> File {
+        self.contents.remove(index)
+    }
+
+    fn get_file(&self, index: usize) -> Option<&File> {
+        self.contents.get(index)
+    }
+}
+
 fn main() {
     // 1. 创建向量
     let _array_1: [&str; 3] = ["sad", "happy", "gray"]; // 传统数组是一种固定大小、固定类型的数据结构
@@ -121,4 +153,27 @@ fn main() {
     println!("seasons length is: {}", seasons.len());
     println!("seasons capacity is: {}", seasons.capacity());
     println!("seasons data is: {:?}", seasons);
+
+    // 8. test
+    let mut folder = Folder::new("bestSelf".to_string());
+
+    folder.create_file(String::from("popMusic1"));
+    folder.create_file(String::from("countrysideMusic1"));
+
+    println!("{:?}", folder);
+
+    let delete_result_1 = folder.delete_file(0);
+
+    println!("{:?}", folder);
+    println!("delete_result_1 : {:?}", delete_result_1);
+
+    match folder.get_file(0) {
+        None => println!("There was no file"),
+        Some(file) => println!("{file:?}"),
+    }
+
+    match folder.get_file(1) {
+        None => println!("There was no file"),
+        Some(file) => println!("{file:?}"),
+    }
 }
