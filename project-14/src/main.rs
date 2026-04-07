@@ -4,6 +4,15 @@ mod inventory;
 // 引入文件夹下所有的.rs文件
 mod orders;
 
+// 10. 使用关键字一
+// 使用之前任然需要引入模块
+use inventory::MANAGER;
+// use inventory::products::ProductCategory;   // 注意不能重复获取
+
+// 11. 使用关键字二
+// 取多个模块数据
+use inventory::products::{Item, ProductCategory};
+
 /*
 // 1. 创建模块
 mod inventory {
@@ -46,18 +55,35 @@ fn main() {
     // 包括数据结构的每个属性的属性范围都需要指定
     println!(
         "ProductCategory has {:?}",
-        inventory::ProductCategory::Hammer
+        inventory::products::ProductCategory::Hammer
     );
     println!(
         "ProductCategory has {:?}",
-        inventory::ProductCategory::Ladder
+        inventory::products::ProductCategory::Ladder
     );
 
-    let item = inventory::Item {
+    let item = inventory::products::Item {
         name: String::from("pop-wwasd 2033"),
-        category: inventory::ProductCategory::Hammer,
+        category: inventory::products::ProductCategory::Hammer,
         quantity: 28,
     };
 
-    println!("{:#?}",item);
+    println!("{:#?}", item);
+
+    // 9. 项目前缀
+    // 绝对路径寻找
+    println!(
+        "Hello, world! This is my manager {}",
+        crate::inventory::MANAGER
+    );
+    println!("Hello, world! This is my orders {}", crate::orders::MANAGER);
+
+    // 10.使用关键字一
+    let item_config = inventory::products::Item {
+        name: String::from("pop-wwasd 2033"),
+        category: ProductCategory::Hammer,
+        quantity: 28,
+    };
+
+    println!("{:#?}", item_config);
 }
