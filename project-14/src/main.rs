@@ -4,6 +4,9 @@ mod inventory;
 // 引入文件夹下所有的.rs文件
 mod orders;
 
+// 15. 外部依赖库
+use fake::{Fake, Faker};
+
 // 10. 使用关键字一
 // 使用之前任然需要引入模块
 use inventory::MANAGER;
@@ -11,7 +14,14 @@ use inventory::MANAGER;
 
 // 11. 使用关键字二
 // 取多个模块数据
+// use inventory::products::{Item, ProductCategory};
+
+// 12. 自我关键字
+// use inventory::{FLOOR_SPACE, talk_to_manager};
+
+// 13. 给关键字设置别名
 use inventory::products::{Item, ProductCategory};
+use inventory::{FLOOR_SPACE as FS, talk_to_manager as ttm};
 
 /*
 // 1. 创建模块
@@ -86,4 +96,18 @@ fn main() {
     };
 
     println!("{:#?}", item_config);
+
+    // 13. 顶层关键字
+    let item_config_two = Item::new(String::from("bq1-xxzeq 1599"), ProductCategory::Ladder, 56);
+
+    println!("{:#?}", item_config_two);
+
+    // 15. 外部依赖库
+    let faker_item: Item = Faker.fake();
+
+    println!("{:?}", faker_item);
+
+    let random_category:ProductCategory = Faker.fake();
+
+    println!("{:?}", random_category);
 }
