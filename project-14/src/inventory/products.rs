@@ -2,12 +2,14 @@ use fake::Dummy;
 // fake::Dummy
 // 为结构预先填入值
 // 生成模拟数值
+/// A category of product that our business sells
 #[derive(Debug, Dummy)]
 pub enum ProductCategory {
     Ladder,
     Hammer,
 }
 
+/// A concrete product
 #[derive(Debug, Dummy)]
 pub struct Item {
     pub name: String,
@@ -17,6 +19,7 @@ pub struct Item {
 
 // 13. 顶层关键字
 impl Item {
+    /// create an Item
     pub fn new(name: String, category: ProductCategory, quantity: u32) -> Self {
         // 13. 顶层关键字
         // 调用顶层模块方法 inventory.rs

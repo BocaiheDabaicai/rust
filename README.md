@@ -3236,3 +3236,108 @@ fn main() {
 - 创建多个依赖包文件
 
 - 文档注释
+  
+  - 指令：`cargo doc --no-deps`，生成文档文件，但不存在于目前的项目中
+  
+  - 指令：`cargo doc --no-deps --open`，生成文档文件，但不存在于目前的项目中，自动在浏览器中打开
+
+- 依赖包网站【`crates.io`】
+
+- 测试
+
+```rust
+// main.rs
+use project_14_test::GymWorkout;
+
+fn main() {
+    let data = GymWorkout::new();
+    
+    println!("The result is {:#?}", data);
+} 
+
+// lib.rs
+mod cardio;
+
+mod diet {
+    const NUTRITIONIST: &str = "Norah Nutrition";
+
+    pub fn ask_about_program() {
+        println!("The nutritionist is {}", NUTRITIONIST);
+    }
+}
+mod weightlifting;
+
+use cardio::{CardioTool, Exercise as CardioExercise};
+use weightlifting::Exercise as WeightliftingExercise;
+
+#[derive(Debug)]
+pub struct GymWorkout {
+    cardio: CardioExercise,
+    weightlifting: WeightliftingExercise,
+}
+
+impl GymWorkout {
+    pub fn new() -> Self {
+        cardio::ask_about_program();
+        diet::ask_about_program();
+        weightlifting::ask_about_program();
+
+        return Self {
+            cardio:{CardioExercise::new(String::from("20260413"),CardioTool::Bike,35)},
+            weightlifting:{WeightliftingExercise::new(String::from("bibiLabu"),41)},
+        };
+    }
+} 
+
+// weightLifting.rs
+const PERSONAL_TRAINER: &str = "Will Weight";
+
+pub fn ask_about_program() {
+    println!("The weightlifting trainer is {}", PERSONAL_TRAINER);
+}
+
+#[derive(Debug)]
+
+pub struct Exercise {
+    name: String,
+    reps: u32,
+}
+
+impl Exercise {
+    pub fn new(name: String, reps: u32) -> Self {
+        return Self { name, reps };
+    }
+} 
+
+// cardio/mod.rs
+const PERSONAL_TRAINER: &str = "Carl Cardio";
+
+pub fn ask_about_program() {
+    println!("The cardio trainer is {}", PERSONAL_TRAINER);
+}
+
+#[derive(Debug)]
+pub enum CardioTool {
+    Treadmill,
+    Bike,
+}
+
+#[derive(Debug)]
+pub struct Exercise {
+    day: String,
+    tool: CardioTool,
+    minutes: u32,
+}
+
+impl Exercise {
+    pub fn new(day: String, tool: CardioTool, minutes: u32) -> Self {
+        return Self { day, tool, minutes };
+    }
+}
+```
+
+> 其余代码查看文档进行获取
+
+---
+
+#### 字符串(String)

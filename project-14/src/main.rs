@@ -74,6 +74,8 @@ mod orders {
 }
 */
 
+// 20. 文档注释
+/// 主要的实现接口路径地址 main.rs
 fn main() {
     // 2. 公共关键字
     println!("Hello, world! This is my INVENTORY_MANAGER {}", inventory::INVENTORY_MANAGER);
