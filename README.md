@@ -3245,13 +3245,19 @@ fn main() {
 
 - 测试
 
+- 补充
+  
+  - `main.rs`是整个项目执行的入口文件，也可以在指令上自行指定
+  
+  - `lib.rs`是整个项目模块的入口文件，所有模块的使用注册都在这里执行
+
 ```rust
 // main.rs
 use project_14_test::GymWorkout;
 
 fn main() {
     let data = GymWorkout::new();
-    
+
     println!("The result is {:#?}", data);
 } 
 
