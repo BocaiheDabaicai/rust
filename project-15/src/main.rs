@@ -1,3 +1,6 @@
+// 5. 收集用户输入
+use std::io;
+
 fn main() {
     // 1. String复习
     let data1 = "Big Boy";
@@ -43,7 +46,73 @@ fn main() {
     // 用split()函数做数组分割，并使用collect()收集到向量当中
     let data11: Vec<&str> = data10.trim().split(" ").collect();
     println!("{:?}", data11);
+
+    /*// 5. 收集用户输入
+    let mut data12 = String::new();
+
+    println!("What is your name?");
+
+    /* // 实现方法一
+    io::stdin()
+        .read_line(&mut data12)
+        .expect("TODO: panic message");
+
+    println!("Pretty girl {}", data12);*/
+
+    // 实现方法二
+    match io::stdin().read_line(&mut data12) {
+        /*
+            trim()方法消除内容打印之后的空一行
+            一般会保留换行字符，导致会空一行
+        */
+        Ok(_) => println!("Pretty girl {}", data12.trim()),
+        Err(error) => println!("There was an error: {}", error),
+    }*/
+
+    // test
+    let mut test1 = String::from("Hello");
+    make_money(&mut test1);
+    println!("Result is {}", test1);
+
+    let test2 = trim_and_capitalize(&mut test1);
+    println!("Result is {}", test2);
+
+    let test3 = "asdqw!ddse32!doas88!dha!2";
+    let test3_vec = elements(test3);
+    println!("Result is {:?}", test3_vec);
+
+    println!("{}", get_identity());
 }
+
 fn print_string(data: &String) {
     println!("That result is: {}", data);
+}
+
+fn make_money(str: &mut String) {
+    str.push_str("$$$")
+}
+
+fn trim_and_capitalize(str: &str) -> String {
+    String::from(str.trim().to_uppercase())
+}
+
+// test function
+fn elements(str: &str) -> Vec<&str> {
+    str.split("!").collect()
+}
+
+fn get_identity() -> String {
+    let mut first_name = String::new();
+    let mut last_name = String::new();
+    println!("What is your first name?");
+    io::stdin()
+        .read_line(&mut first_name)
+        .expect("Fail input your first_name");
+    println!("What is your last name?");
+    match io::stdin().read_line(&mut last_name) {
+        Ok(_) => println!("Pretty girl {}", last_name.trim()),
+        Err(error) => println!("There was an error: {}", error),
+    }
+
+    format!("{} {}", first_name.trim(), last_name.trim())
 }
