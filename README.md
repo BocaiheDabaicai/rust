@@ -3479,9 +3479,14 @@ fn get_identity() -> String {
 
     format!("{} {}", first_name.trim(), last_name.trim())
 }
-
 ```
 
 ---
 
 #### 哈希存储
+
+- 创建`HashMap`
+
+- 移除`HashMap`
+
+- `HashMap`所有权
