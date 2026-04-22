@@ -3490,3 +3490,13 @@ fn get_identity() -> String {
 - 移除`HashMap`
 
 - `HashMap`所有权
+
+- 获取键值
+
+- 覆盖键值
+
+- `entry`方法
+
+- `HashSet`类型
+
+- `HashSet`方法
