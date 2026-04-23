@@ -134,4 +134,30 @@ fn main() {
     // 是否自己的集合包含另一个集合
     println!("{:?}", data7.is_superset(&data8));
     println!("{:?}", data8.is_superset(&data7));
+
+    // 9. test
+    let mut sauces_to_meals: HashMap<&str, Vec<&str>> = HashMap::from([
+        (
+            "Ketchup",
+            Vec::from(["French Fries", "Burgers", "Hot Dogs"]),
+        ),
+        (
+            "Mayonnaise",
+            Vec::from(["Sandwiches", "Burgers", "Coleslaw"]),
+        ),
+    ]);
+
+    sauces_to_meals.insert("Mustard", Vec::from(["Hot dog", "Burgers", "Pretzels"]));
+
+    let data9 = sauces_to_meals.remove("Mayonnaise");
+    println!("{:?}", data9.unwrap());
+
+    let data10 = sauces_to_meals.get("Mustard");
+    println!("{:?}", data10.unwrap());
+
+    sauces_to_meals
+        .entry("Soy Sauce")
+        .or_insert(Vec::from(["Sushi", "Dumplings"]));
+
+    println!("{:#?}",sauces_to_meals);
 }
