@@ -3895,11 +3895,11 @@ fn write_to_file() -> io::Result<String> {
 
     Ok(input1)
 }
-
 ```
 
 ---
 
 #### 特征
 
-- asd
+- 介绍`traits`
+- 定义`traits`
