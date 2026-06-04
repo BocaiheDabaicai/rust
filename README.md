@@ -3903,3 +3903,5 @@ fn write_to_file() -> io::Result<String> {
 
 - 介绍`traits`
 - 定义`traits`
+- 数据结构接入`traits`
+- 默认接入
