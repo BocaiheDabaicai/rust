@@ -3905,3 +3905,6 @@ fn write_to_file() -> io::Result<String> {
 - 定义`traits`
 - 数据结构接入`traits`
 - 默认接入
+- 回调`trait`方法
+- `trait`方法参数约束
+- `trait`绑定语法

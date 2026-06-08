@@ -25,6 +25,11 @@ impl Hotel {
             reservations: HashMap::new(),
         }
     }
+    // 4. 回调`trait`方法
+    fn summarize(&self) -> String {
+        // 只要语言识别到接入体有 get_description 函数即可成立
+        format!("{}: {}", self.name, self.get_description())
+    }
 }
 
 impl Accommodation for Hotel {
@@ -62,10 +67,28 @@ impl Accommodation for AirBnB {
     }
 }
 
+// 5. `trait`方法参数约束
+// 6. `trait`绑定语法
+fn book_for_one_night<T: Accommodation>(entity: &mut T, guest: &str) {
+    println!(
+        "book_for_one_night: {}. Name: {}",
+        entity.get_description(),
+        guest
+    );
+    entity.book(guest, 1);
+}
+// 6. `trait`绑定语法
+fn mix_and_match<T: Accommodation, U: Accommodation>(first: &mut T, second: &mut U, guest: &str) {
+    first.book(guest, 1);
+    second.book(guest, 1);
+}
+
 fn main() {
     let mut hotel = Hotel::new("BabaBoy");
 
     println!("{:?}", hotel.get_description());
+    // 4. 回调`trait`方法
+    println!("{:?}", hotel.summarize());
 
     hotel.book("John", 3);
     hotel.book("Bob", 1);
@@ -80,5 +103,15 @@ fn main() {
     airbnb.book("Bob", 1);
     airbnb.book("sailuo", 12);
 
+    println!("{:?}", airbnb);
+
+    book_for_one_night(&mut hotel, "Wodedaodun");
+    book_for_one_night(&mut airbnb, "Auligei");
+
+    println!("{:?}", hotel);
+    println!("{:?}", airbnb);
+
+    mix_and_match(&mut hotel, &mut airbnb, "Souyougen");
+    println!("{:?}", hotel);
     println!("{:?}", airbnb);
 }
