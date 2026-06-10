@@ -3908,3 +3908,8 @@ fn write_to_file() -> io::Result<String> {
 - 回调`trait`方法
 - `trait`方法参数约束
 - `trait`绑定语法
+- 多`trait`绑定
+- `where`语句
+- `trait`函数返回值
+- `trait`绑定条件方法
+- `trait`对象
