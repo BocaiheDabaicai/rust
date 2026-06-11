@@ -3913,3 +3913,5 @@ fn write_to_file() -> io::Result<String> {
 - `trait`函数返回值
 - `trait`绑定条件方法
 - `trait`对象
+- `trait`的生效领域
+- 项目化代码

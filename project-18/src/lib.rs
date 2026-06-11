@@ -1,10 +1,8 @@
-/*
-// 12. 项目化代码
 use std::collections::HashMap;
 use std::fmt::{Debug, Display}; // 7. 多`trait`绑定
 
 // 1. trait 定义
-trait Accommodation {
+pub trait Accommodation {
     // fn get_description(&self) -> String;
     // 3. 默认接入
     /*fn get_description(&self) -> String {
@@ -15,7 +13,7 @@ trait Accommodation {
 }
 
 // 7. 多`trait`绑定
-trait Description {
+pub trait Description {
     fn get_description(&self) -> String {
         String::from("A wonderful place to stay two double.")
     }
@@ -28,13 +26,13 @@ trait Description {
 // 2. 数据结构接入`traits`
 #[derive(Debug)]
 // 10. `trait`绑定条件方法
-struct Hotel<T> {
+pub struct Hotel<T> {
     name: T,
     reservations: HashMap<String, u32>,
 }
 
 impl<T> Hotel<T> {
-    fn new(name: T) -> Self {
+    pub fn new(name: T) -> Self {
         Self {
             name,
             reservations: HashMap::new(),
@@ -69,13 +67,13 @@ impl<T: Display> Description for Hotel<T> {
 }
 
 #[derive(Debug)]
-struct AirBnB {
+pub struct AirBnB {
     host: String,
     guests: Vec<(String, u32)>,
 }
 
 impl AirBnB {
-    fn new(host: &str) -> Self {
+    pub fn new(host: &str) -> Self {
         Self {
             host: host.to_string(),
             guests: vec![],
@@ -112,7 +110,7 @@ impl Description for AirBnB {
 }*/
 
 // 7. 多`trait`绑定
-fn book_for_one_night<T: Accommodation + Description>(entity: &mut T, guest: &str) {
+pub fn book_for_one_night<T: Accommodation + Description>(entity: &mut T, guest: &str) {
     println!(
         "book_for_one_night: {}. Name: {}",
         entity.get_description(),
@@ -137,7 +135,7 @@ fn book_for_one_night<T: Accommodation + Description>(entity: &mut T, guest: &st
 }*/
 
 // 8. `where`语句
-fn mix_and_match<T, U>(first: &mut T, second: &mut U, guest: &str)
+pub fn mix_and_match<T, U>(first: &mut T, second: &mut U, guest: &str)
 where
     T: Accommodation + Description,
     U: Accommodation,
@@ -147,81 +145,6 @@ where
 }
 
 // 9. `trait`函数返回值
-fn choose_best_place_to_stay() -> impl Accommodation + Description + Debug {
+pub fn choose_best_place_to_stay() -> impl Accommodation + Description + Debug {
     Hotel::new("BabaBoy")
-}*/
-use project_18::{
-    Accommodation, AirBnB, Description, Hotel, book_for_one_night, choose_best_place_to_stay,
-    mix_and_match,
-};
-
-fn main() {
-    // let mut hotel = Hotel::new("BabaBoy");
-    // 9. `trait`函数返回值
-    let mut hotel = choose_best_place_to_stay();
-
-    println!("{:?}", hotel.get_description());
-    // 4. 回调`trait`方法
-    println!("{:?}", hotel.summarize());
-
-    hotel.book("John", 3);
-    hotel.book("Bob", 1);
-
-    println!("{:?}", hotel);
-
-    let mut airbnb = AirBnB::new("Bibilabu");
-
-    println!("{:?}", airbnb.get_description());
-
-    airbnb.book("John", 3);
-    airbnb.book("Bob", 1);
-    airbnb.book("sailuo", 12);
-
-    println!("{:?}", airbnb);
-
-    book_for_one_night(&mut hotel, "Wodedaodun");
-    book_for_one_night(&mut airbnb, "Auligei");
-
-    println!("{:?}", hotel);
-    println!("{:?}", airbnb);
-
-    mix_and_match(&mut hotel, &mut airbnb, "Souyougen");
-    println!("{:?}", hotel);
-    println!("{:?}", airbnb);
-
-    // 10. `trait`绑定条件方法
-    let mut hotel2 = Hotel::new(String::from("Jinitaimei"));
-
-    println!("{:?}", hotel2.get_description());
-    println!("{:?}", hotel2.summarize());
-
-    hotel2.book("zzz", 3);
-    hotel2.book("www", 1);
-
-    println!("{:?}", hotel2);
-
-    let mut hotel3 = Hotel::new(vec!["GGboy", "Nizhenmei"]);
-
-    // 方法会失效，因为vec数组里面没有hotel3的表达方法
-    // println!("{:?}", hotel3.get_description());
-    // println!("{:?}", hotel3.summarize());
-
-    hotel3.book("zzz", 3);
-    hotel3.book("www", 1);
-
-    println!("{:?}", hotel3);
-
-    // 11. `trait`对象
-    /*let stays: Vec<&dyn Description> = vec![&hotel2, &airbnb];
-
-    println!("{}", stays[0].get_description());
-    println!("{}", stays[1].get_description());*/
-
-    let mut stays2: Vec<&mut dyn Accommodation> = vec![&mut hotel2, &mut airbnb];
-
-    stays2[0].book("Labby", 2);
-    stays2[1].book("Labby", 2);
-
-    println!("{:?}", hotel2);
-    println!("{:?}", airbnb);
 }
