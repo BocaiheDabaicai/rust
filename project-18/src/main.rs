@@ -150,15 +150,87 @@ where
 fn choose_best_place_to_stay() -> impl Accommodation + Description + Debug {
     Hotel::new("BabaBoy")
 }*/
-use project_18::{
+
+/*use project_18::{
     Accommodation, AirBnB, Description, Hotel, book_for_one_night, choose_best_place_to_stay,
     mix_and_match,
-};
+};*/
+
+// 12. 项目化代码（多模块）
+use project_18::lodging::{Accommodation, AirBnB, Description, Hotel};
+use project_18::utils::{book_for_one_night, choose_best_place_to_stay, mix_and_match};
+
+// 13. 关联约束
+trait Taxable {
+    const TAX_RATE: f64 = 0.21;
+
+    // 14. `getter`方法
+    // fn tax_bill(&self) -> f64;
+
+    fn amount(&self) -> f64;
+
+    // 15. `setter`方法
+    // 使用 double_amount()
+    // ----  外部调用方法 获取值
+    // 结构中设置值
+    // 通过 amount() 调用值，然后 * 2.0
+    // 走 set_amount() ，设置结构的 amount 值
+    // ** 总结，通过：调用结构的amount，使用特征中的set_amount方法，改变结构的amount
+    fn set_amount(&mut self, new_amount: f64);
+
+    fn double_amount(&mut self) {
+        // self.amount = self.amount() * 2.0;
+        self.set_amount(self.amount() * 2.0)
+    }
+
+    fn tax_bill(&self) -> f64 {
+        self.amount() * Self::TAX_RATE
+    }
+}
+
+#[derive(Debug)]
+struct Income {
+    amount: f64,
+}
+
+impl Taxable for Income {
+    fn amount(&self) -> f64 {
+        self.amount
+    }
+
+    fn set_amount(&mut self, new_amount: f64) {
+        self.amount = new_amount;
+    }
+
+    /*fn tax_bill(&self) -> f64 {
+        self.amount * Self::TAX_RATE
+    }*/
+}
+
+#[derive(Debug)]
+struct Bonus {
+    amount: f64,
+}
+
+impl Taxable for Bonus {
+    const TAX_RATE: f64 = 0.50;
+
+    fn amount(&self) -> f64 {
+        self.amount
+    }
+
+    fn set_amount(&mut self, new_amount: f64) {
+        self.amount = new_amount;
+    }
+    /*fn tax_bill(&self) -> f64 {
+        self.amount * Self::TAX_RATE
+    }*/
+}
 
 fn main() {
     // let mut hotel = Hotel::new("BabaBoy");
     // 9. `trait`函数返回值
-    let mut hotel = choose_best_place_to_stay();
+    let mut hotel = choose_best_place_to_stay(); // 存在写法 project_18::utils::choose_best_place_to_stay()
 
     println!("{:?}", hotel.get_description());
     // 4. 回调`trait`方法
@@ -224,4 +296,19 @@ fn main() {
 
     println!("{:?}", hotel2);
     println!("{:?}", airbnb);
+
+    // 13. 关联约束
+    let income = Income { amount: 200.21 };
+
+    println!("your bill tax is: {:.2}", income.tax_bill());
+
+    let mut bonus = Bonus { amount: 105.44 };
+
+    println!("your bill bonus is: {:.2}", bonus.tax_bill());
+
+    // 14. `getter`方法
+
+    bonus.double_amount();
+
+    println!("After bonus.double_amount(). Your bill bonus is: {:.2}", bonus.tax_bill());
 }

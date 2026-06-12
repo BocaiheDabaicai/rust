@@ -3915,3 +3915,7 @@ fn write_to_file() -> io::Result<String> {
 - `trait`对象
 - `trait`的生效领域
 - 项目化代码
+- 项目化代码（多模块）
+- 关联约束
+- `getter`方法
+- `setter`方法
