@@ -156,18 +156,38 @@ fn choose_best_place_to_stay() -> impl Accommodation + Description + Debug {
     mix_and_match,
 };*/
 
+// 18.  接入`display`特征
+use std::fmt::{Display, Formatter, Result};
+
 // 12. 项目化代码（多模块）
 use project_18::lodging::{Accommodation, AirBnB, Description, Hotel};
 use project_18::utils::{book_for_one_night, choose_best_place_to_stay, mix_and_match};
 
+// 16. `super`特征
+// 17.  特征类型
+trait Investment<T> {
+    fn amount(&self) -> T;
+    // fn set_amount(&mut self, new_amount: f64);
+
+    /*fn double_amount(&mut self) {
+        // 17.  特征类型
+        self.set_amount(self.amount() * 2.0)
+    }*/
+
+    // 17.  特征类型
+    fn double_amount(&mut self);
+}
+
+// 16. `super`特征
 // 13. 关联约束
-trait Taxable {
+trait Taxable: Investment<f64> {
     const TAX_RATE: f64 = 0.21;
 
     // 14. `getter`方法
     // fn tax_bill(&self) -> f64;
 
-    fn amount(&self) -> f64;
+    // 16. `super`特征
+    /*fn amount(&self) -> f64;
 
     // 15. `setter`方法
     // 使用 double_amount()
@@ -181,7 +201,7 @@ trait Taxable {
     fn double_amount(&mut self) {
         // self.amount = self.amount() * 2.0;
         self.set_amount(self.amount() * 2.0)
-    }
+    }*/
 
     fn tax_bill(&self) -> f64 {
         self.amount() * Self::TAX_RATE
@@ -193,38 +213,89 @@ struct Income {
     amount: f64,
 }
 
-impl Taxable for Income {
+impl Investment<f64> for Income {
     fn amount(&self) -> f64 {
         self.amount
     }
 
-    fn set_amount(&mut self, new_amount: f64) {
+    /*fn set_amount(&mut self, new_amount: f64) {
         self.amount = new_amount;
+    }*/
+
+    fn double_amount(&mut self) {
+        self.amount *= 2.0;
     }
 
     /*fn tax_bill(&self) -> f64 {
         self.amount * Self::TAX_RATE
     }*/
 }
+
+impl Taxable for Income {}
 
 #[derive(Debug)]
 struct Bonus {
     amount: f64,
 }
 
+impl Investment<f64> for Bonus {
+    fn amount(&self) -> f64 {
+        self.amount
+    }
+
+    /*fn set_amount(&mut self, new_amount: f64) {
+        self.amount = new_amount;
+    }*/
+
+    fn double_amount(&mut self) {
+        self.amount *= 2.0;
+    }
+}
+
 impl Taxable for Bonus {
     const TAX_RATE: f64 = 0.50;
 
-    fn amount(&self) -> f64 {
+    /*fn amount(&self) -> f64 {
         self.amount
     }
 
     fn set_amount(&mut self, new_amount: f64) {
         self.amount = new_amount;
-    }
+    }*/
     /*fn tax_bill(&self) -> f64 {
         self.amount * Self::TAX_RATE
     }*/
+}
+
+#[derive(Debug)]
+struct QualityTime {
+    minutes: u32,
+}
+
+impl Investment<u32> for QualityTime {
+    fn amount(&self) -> u32 {
+        self.minutes
+    }
+
+    /*fn set_amount(&mut self, new_amount: u32) {
+        self.minutes = new_amount;
+    }*/
+
+    fn double_amount(&mut self) {
+        self.minutes *= 2;
+    }
+}
+
+// 18.  接入`display`特征
+struct Apple {
+    kind: String,
+    price: f64,
+}
+
+impl Display for Apple {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        write!(f, "{} 🍎  for 🍎  price is: {}", self.kind, self.price)
+    }
 }
 
 fn main() {
@@ -310,5 +381,25 @@ fn main() {
 
     bonus.double_amount();
 
-    println!("After bonus.double_amount(). Your bill bonus is: {:.2}", bonus.tax_bill());
+    println!(
+        "After bonus.double_amount(). Your bill bonus is: {:.2}",
+        bonus.tax_bill()
+    );
+
+    // 16. `super`特征
+    let mut quality_time = QualityTime { minutes: 120 };
+
+    println!("Time is:{:?}", quality_time);
+
+    quality_time.double_amount();
+
+    println!("Time is:{:?}", quality_time);
+
+    // 18.  接入`display`特征
+    let apple = Apple {
+        kind: String::from("Bababoy"),
+        price: 1.21,
+    };
+
+    println!("{}", apple);
 }

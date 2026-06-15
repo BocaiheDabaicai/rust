@@ -3919,3 +3919,7 @@ fn write_to_file() -> io::Result<String> {
 - 关联约束
 - `getter`方法
 - `setter`方法
+- `super`特征
+- 特征类型
+- 接入`display`特征
+- 
