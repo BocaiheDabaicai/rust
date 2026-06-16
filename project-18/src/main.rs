@@ -156,8 +156,12 @@ fn choose_best_place_to_stay() -> impl Accommodation + Description + Debug {
     mix_and_match,
 };*/
 
+// 22. 接入`drop`特征
+use std::fs;
+use std::ops::Drop;
+
 // 18.  接入`display`特征
-use std::fmt::{Display, Formatter, Result};
+use std::fmt::{Debug, Display, Formatter, Result};
 
 // 12. 项目化代码（多模块）
 use project_18::lodging::{Accommodation, AirBnB, Description, Hotel};
@@ -286,9 +290,34 @@ impl Investment<u32> for QualityTime {
     }
 }
 
+// 20. 接入`Debug`特征
+// 19. 在枚举中接入`display`特征
+enum AppleTpe {
+    RefDelicious,
+    GrannySmith,
+}
+
+impl Display for AppleTpe {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        match self {
+            AppleTpe::RefDelicious => write!(f, "🥂 非常好吃！good job!"),
+            AppleTpe::GrannySmith => write!(f, "🥠 美味可口！ Blaster!"),
+        }
+    }
+}
+impl Debug for AppleTpe {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        match self {
+            AppleTpe::RefDelicious => write!(f, "AppleTpe::RefDelicious"),
+            AppleTpe::GrannySmith => write!(f, "AppleTpe::GrannySmith"),
+        }
+    }
+}
+
+// 20. 接入`Debug`特征
 // 18.  接入`display`特征
 struct Apple {
-    kind: String,
+    kind: AppleTpe,
     price: f64,
 }
 
@@ -298,6 +327,59 @@ impl Display for Apple {
     }
 }
 
+impl Debug for Apple {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        // write!(f, "Apple::[ Kind: {}, Price: {} ]", self.kind, self.price)
+        // 21. 格式化方法
+        f.debug_struct("** Apple **")
+            .field("Kind", &self.kind)
+            .field("Price", &self.price)
+            .finish()
+    }
+}
+
+// 22. 接入`drop`特征
+/*
+    使用前，记得在项目根目录下创建一个"apple.txt"文件
+*/
+impl Drop for Apple {
+    fn drop(&mut self) {
+        match fs::remove_file("apple.txt") {
+            Ok(_) => println!("Apple is being cleaned up."),
+            Err(err) => eprintln!("{}", err),
+        }
+    }
+}
+
+// 23. 接入`clone`特征
+#[derive(Debug,Clone)]
+struct Appointment {
+    doctor: String,
+    start_time: String,
+    end_time: String,
+}
+
+impl Appointment {
+    fn new(doctor: &str, start_time: &str, end_time: &str) -> Self {
+        Self {
+            doctor: doctor.to_string(),
+            start_time: start_time.to_string(),
+            end_time: end_time.to_string(),
+        }
+    }
+}
+/*
+// 等同于 #[derive(Debug)] 的效果
+impl Clone for Appointment {
+    fn clone(&self) -> Self {
+        Self {
+            doctor: self.doctor.clone(), // 开辟一个新空间存储数据
+            start_time: self.start_time.clone(),
+            end_time: self.end_time.clone(),
+        }
+    }
+}
+*/
 fn main() {
     // let mut hotel = Hotel::new("BabaBoy");
     // 9. `trait`函数返回值
@@ -396,10 +478,28 @@ fn main() {
     println!("Time is:{:?}", quality_time);
 
     // 18.  接入`display`特征
+    // 20. 接入`Debug`特征
+    // 22. 接入`drop`特征
     let apple = Apple {
-        kind: String::from("Bababoy"),
+        kind: AppleTpe::GrannySmith,
         price: 1.21,
     };
 
+    let apple1 = Apple {
+        kind: AppleTpe::RefDelicious,
+        price: 3.27,
+    };
+
     println!("{}", apple);
+    println!("{}", apple1);
+
+    println!("{:?}", apple);
+    println!("{:?}", apple1);
+
+    // 23. 接入`clone`特征
+    let app1 = Appointment::new("Dr. Andrews", "20260613", "20260616");
+    let app2 = app1.clone();
+
+    println!("{:?}", app1);
+    println!("{:?}", app2);
 }

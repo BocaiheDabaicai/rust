@@ -3922,4 +3922,9 @@ fn write_to_file() -> io::Result<String> {
 - `super`特征
 - 特征类型
 - 接入`display`特征
-- 
+- 在枚举中接入`display`特征
+- 接入`Debug`特征
+- 格式化方法
+- 接入`drop`特征
+- 接入`clone`特征
+- 接入`copy`特征
