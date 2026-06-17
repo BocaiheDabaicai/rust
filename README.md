@@ -3928,3 +3928,6 @@ fn write_to_file() -> io::Result<String> {
 - 接入`drop`特征
 - 接入`clone`特征
 - 接入`copy`特征
+- 接入`partialEq`特征
+- 定义不同类型的比较
+- 为枚举接入`partialEq`特征

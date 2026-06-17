@@ -352,7 +352,7 @@ impl Drop for Apple {
 }
 
 // 23. 接入`clone`特征
-#[derive(Debug,Clone)]
+#[derive(Debug, Clone)]
 struct Appointment {
     doctor: String,
     start_time: String,
@@ -380,6 +380,103 @@ impl Clone for Appointment {
     }
 }
 */
+
+// 24. 接入`copy`特征
+#[derive(Debug, Clone)]
+struct Duration {
+    hours: u32,
+    minutes: u32,
+    seconds: u32,
+}
+
+impl Duration {
+    fn new(hours: u32, minutes: u32, seconds: u32) -> Self {
+        Self {
+            hours,
+            minutes,
+            seconds,
+        }
+    }
+}
+
+impl Copy for Duration {}
+
+// 25. 接入`partialEq`特征
+// #[derive(PartialEq)]
+struct Flight {
+    origin: String,
+    destination: String,
+    time: String,
+}
+
+impl Flight {
+    fn new(origin: &str, destination: &str, time: &str) -> Self {
+        Self {
+            origin: origin.to_string(),
+            destination: destination.to_string(),
+            time: time.to_string(),
+        }
+    }
+}
+
+// 等同于 #[derive(PartialEq)]
+impl PartialEq for Flight {
+    fn eq(&self, other: &Self) -> bool {
+        self.origin == other.origin && self.destination == other.destination
+    }
+}
+
+// 26. 定义不同类型的比较
+struct BusTrip {
+    origin: String,
+    destination: String,
+    time: String,
+}
+
+impl BusTrip {
+    fn new(origin: &str, destination: &str, time: &str) -> Self {
+        Self {
+            origin: origin.to_string(),
+            destination: destination.to_string(),
+            time: time.to_string(),
+        }
+    }
+}
+
+// 实现 Flight 能够与 BusTrip 进行比较
+// 实现 BusTrip 能够与 Flight 进行比较，并未实现
+// 实现 BusTrip 能够与 BusTrip 进行比较，并未实现
+// 如果两者的结构体相同，那么可以采用 #[derive(PartialEq)]，放在结构体下面
+impl PartialEq<BusTrip> for Flight {
+    fn eq(&self, other: &BusTrip) -> bool {
+        self.time == other.time
+    }
+}
+
+// 27. 为枚举接入`partialEq`特征
+#[derive(PartialEq)]
+enum Musician {
+    SingerSoneWriter(String),
+    Band(u32),
+}
+
+use Musician::{Band, SingerSoneWriter};
+
+impl PartialEq for Musician {
+    fn eq(&self, other: &Self) -> bool {
+        match self {
+            SingerSoneWriter(name) => match other {
+                SingerSoneWriter(other_name) => name == other_name,
+                Band(_) => false,
+            },
+            Band(name) => match other {
+                SingerSoneWriter(_) => false,
+                Band(other_name) => name == other_name,
+            },
+        }
+    }
+}
+
 fn main() {
     // let mut hotel = Hotel::new("BabaBoy");
     // 9. `trait`函数返回值
@@ -502,4 +599,43 @@ fn main() {
 
     println!("{:?}", app1);
     println!("{:?}", app2);
+
+    // 24. 接入`copy`特征
+    let dura1 = Duration::new(2, 24, 33);
+    let dura2 = dura1;
+
+    println!("The duration result is: {:?}", dura1);
+    println!("The duration result is: {:?}", dura2);
+
+    // 25. 接入`partialEq`特征
+    // 26. 定义不同类型的比较
+    let equal1 = Flight::new("Beijing", "Shanghai", "8:21");
+    let equal2 = Flight::new("Beijing", "Shanghai", "8:21");
+    let equal3 = Flight::new("Chengdu", "Shanghai", "16:22");
+
+    println!("equal1 == equal2, result is: {}", equal1 == equal2);
+    println!("equal1 == equal3, result is: {}", equal1 == equal3);
+    println!("equal1.eq(&equal2), result is: {}", equal1.eq(&equal2));
+    println!("equal1.ne(&equal3), result is: {}", equal1.ne(&equal3));
+
+    let equal4 = BusTrip::new("Chengdu", "Shanghai", "16:22");
+    let equal5 = BusTrip::new("Chengdu", "Shanghai", "18:52");
+
+    println!("equal3.eq(&equal4), result is: {}", equal3.eq(&equal4));
+    println!("equal3.ne(&equal4), result is: {}", equal3.ne(&equal4));
+    println!("equal3.eq(&equal5), result is: {}", equal3.eq(&equal5));
+    println!("equal3.ne(&equal5), result is: {}", equal3.ne(&equal5));
+
+    // 27. 为枚举接入`partialEq`特征
+    let music1 = SingerSoneWriter("Bubuster".to_string());
+    let music2 = SingerSoneWriter("Bubuster".to_string());
+    let music3 = SingerSoneWriter("ppoomomo".to_string());
+    let band1 = Band(2);
+    let band2 = Band(3);
+    let band3 = Band(2);
+
+    println!("music1 == music2 : {}", music1 == music2);
+    println!("music1 == music3 : {}", music1 == music3);
+    println!("band1 == band2 : {}", band1 == band2);
+    println!("band1 == band3 : {}", band1 == band3);
 }
