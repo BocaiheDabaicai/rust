@@ -155,7 +155,7 @@ fn choose_best_place_to_stay() -> impl Accommodation + Description + Debug {
     Accommodation, AirBnB, Description, Hotel, book_for_one_night, choose_best_place_to_stay,
     mix_and_match,
 };*/
-
+use std::cmp::Ordering;
 // 22. 接入`drop`特征
 use std::fs;
 use std::ops::Drop;
@@ -402,7 +402,8 @@ impl Duration {
 impl Copy for Duration {}
 
 // 25. 接入`partialEq`特征
-// #[derive(PartialEq)]
+// 28. 接入`Eq`特征
+#[derive(PartialEq, Eq)]
 struct Flight {
     origin: String,
     destination: String,
@@ -420,11 +421,11 @@ impl Flight {
 }
 
 // 等同于 #[derive(PartialEq)]
-impl PartialEq for Flight {
+/*impl PartialEq for Flight {
     fn eq(&self, other: &Self) -> bool {
         self.origin == other.origin && self.destination == other.destination
     }
-}
+}*/
 
 // 26. 定义不同类型的比较
 struct BusTrip {
@@ -454,7 +455,7 @@ impl PartialEq<BusTrip> for Flight {
 }
 
 // 27. 为枚举接入`partialEq`特征
-#[derive(PartialEq)]
+// #[derive(PartialEq,Eq)]
 enum Musician {
     SingerSoneWriter(String),
     Band(u32),
@@ -475,6 +476,91 @@ impl PartialEq for Musician {
             },
         }
     }
+}
+
+// 29. 接入`partialOld`特征
+struct Job {
+    salary: u32,
+    commute_time: u32,
+}
+
+impl Job {
+    fn new(salary: u32, commute_time: u32) -> Self {
+        Self {
+            salary,
+            commute_time,
+        }
+    }
+}
+
+impl PartialEq for Job {
+    fn eq(&self, other: &Self) -> bool {
+        self.salary == other.salary
+    }
+}
+
+impl Eq for Job {}
+
+impl PartialOrd for Job {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        // 最终版本
+        self.salary.partial_cmp(&other.salary)
+
+        // 优化版本
+        /*match self.salary.partial_cmp(&other.salary) {
+            Some(Ordering::Equal) => Some(Ordering::Equal),
+            Some(Ordering::Less) => Some(Ordering::Less),
+            Some(Ordering::Greater) => Some(Ordering::Greater),
+            None => None
+        }*/
+
+        // 等同的比较效果
+        /*if self.salary == other.salary {
+            Some(Ordering::Equal)
+        } else if self.salary < other.salary {
+            Some(Ordering::Less)
+        } else if self.salary > other.salary {
+            Some(Ordering::Greater)
+        } else {
+            None
+        }*/
+    }
+}
+
+// 30. 关联类型一
+use std::ops::Add;
+
+#[derive(Debug)]
+struct Lunch {
+    cost: f64,
+}
+
+impl Lunch {
+    fn new(cost: f64) -> Self {
+        Self { cost }
+    }
+}
+
+impl Add for Lunch {
+    // f64版本
+    /*type Output = f64;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        self.cost + rhs.cost
+    }*/
+
+    // Lunch版本
+    type Output = Lunch;
+    fn add(self, rhs: Self) -> Self::Output {
+        Self {
+            cost: self.cost + rhs.cost,
+        }
+    }
+}
+
+// 31. 关联类型二
+fn add_two_number<T: Add<Output = T>>(a: T, b: T) -> T {
+    a + b
 }
 
 fn main() {
@@ -638,4 +724,34 @@ fn main() {
     println!("music1 == music3 : {}", music1 == music3);
     println!("band1 == band2 : {}", band1 == band2);
     println!("band1 == band3 : {}", band1 == band3);
+
+    // 29. 接入`partialOld`特征
+    let job1 = Job::new(25, 2);
+    let job2 = Job::new(33, 5);
+    let job3 = Job::new(10, 1);
+    let job4 = Job::new(25, 1);
+
+    println!("{}", job1 > job2);
+    println!("{}", job1 > job3);
+    println!("{}", job1 > job4);
+
+    // 30. 关联类型一
+    let cost1 = Lunch::new(24.11);
+    let cost2 = Lunch::new(7.89);
+
+    println!(
+        "{} + {} = {:?}",
+        cost1.cost.clone(),
+        cost2.cost.clone(),
+        cost1 + cost2
+    );
+
+    // 31. 关联类型二
+    let cost3 = Lunch::new(24.11);
+    let cost4 = Lunch::new(7.89);
+
+    println!("Result is: {}", add_two_number(2, 3));
+    println!("Result is: {}", add_two_number(2.15, 3.31));
+    println!("Result is: {}", add_two_number(-2, 3));
+    println!("Result is: {:?}", add_two_number(cost3, cost4));
 }

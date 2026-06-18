@@ -3931,3 +3931,7 @@ fn write_to_file() -> io::Result<String> {
 - 接入`partialEq`特征
 - 定义不同类型的比较
 - 为枚举接入`partialEq`特征
+- 接入`Eq`特征，得先实现它的父特征`partialEq`
+- 接入`partialOld`特征
+- 关联类型一
+- 关联类型二
