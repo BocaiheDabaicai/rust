@@ -162,7 +162,6 @@ use std::ops::Drop;
 
 // 18.  接入`display`特征
 use std::fmt::{Debug, Display, Formatter, Result};
-
 // 12. 项目化代码（多模块）
 use project_18::lodging::{Accommodation, AirBnB, Description, Hotel};
 use project_18::utils::{book_for_one_night, choose_best_place_to_stay, mix_and_match};
@@ -563,6 +562,110 @@ fn add_two_number<T: Add<Output = T>>(a: T, b: T) -> T {
     a + b
 }
 
+// 32. test
+// use std::fmt::{Debug,Display,Formatter};
+
+trait Drinkable {
+    fn consume(&mut self);
+    fn get_data(&self) -> String;
+    fn stats(&self) {
+        println!("{}", self.get_data());
+    }
+}
+
+#[derive(Debug)]
+enum Milk {
+    Whole,
+    Oat,
+    Almond,
+}
+
+struct Coffee<T> {
+    kind: T,
+    milk: Milk,
+    ounces: u32,
+}
+
+impl<T> Coffee<T> {
+    fn new(kind: T, milk: Milk, ounces: u32) -> Self {
+        Self { kind, milk, ounces }
+    }
+}
+
+impl<T: Debug> Debug for Coffee<T> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        f.debug_struct("COFFEE")
+            .field("kind", &self.kind)
+            .field("Milk", &self.milk)
+            .field("Ounces", &self.ounces)
+            .finish()
+    }
+}
+
+impl<T: Display> Drinkable for Coffee<T> {
+    fn consume(&mut self) {
+        self.ounces = 0
+    }
+
+    fn get_data(&self) -> String {
+        format!("A delicious {} ounce {}", self.ounces, self.kind)
+    }
+}
+
+#[derive(Debug)]
+struct Soda {
+    calories: u32,
+    price: f64,
+    flavor: String,
+    percentage: u32,
+}
+
+impl Soda {
+    fn new(calories: u32, price: f64, flavor: String) -> Self {
+        Self {
+            calories,
+            price,
+            flavor,
+            percentage: 100,
+        }
+    }
+}
+
+impl Drinkable for Soda {
+    fn consume(&mut self) {
+        self.percentage = 0
+    }
+
+    fn get_data(&self) -> String {
+        format!("Flavor: {}, Calories: {}", self.flavor, self.calories)
+    }
+}
+
+impl Display for Soda {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        write!(f, "** {} Soda **", self.flavor)
+    }
+}
+
+impl Clone for Soda {
+    fn clone(&self) -> Self {
+        Self {
+            calories: self.calories,
+            price: self.price,
+            flavor: self.flavor.clone(),
+            percentage: self.percentage,
+        }
+    }
+}
+
+impl PartialEq for Soda {
+    fn eq(&self, other: &Self) -> bool {
+        self.price == other.price
+    }
+}
+
+impl Eq for Soda {}
+
 fn main() {
     // let mut hotel = Hotel::new("BabaBoy");
     // 9. `trait`函数返回值
@@ -754,4 +857,26 @@ fn main() {
     println!("Result is: {}", add_two_number(2.15, 3.31));
     println!("Result is: {}", add_two_number(-2, 3));
     println!("Result is: {:?}", add_two_number(cost3, cost4));
+
+    // 32. test
+    let mut latte = Coffee::new("Bibilabo", Milk::Whole, 13);
+
+    println!("{:?}", latte);
+    latte.consume();
+    println!("{:?}", latte);
+
+    let cappuccino = Coffee::new("Cappuccino", Milk::Almond, 24);
+
+    println!("{}", cappuccino.get_data());
+
+    let pepsi = Soda::new(127, 21.58, "Cherry".to_string());
+
+    println!("{}", pepsi); // Display 模式
+
+    let mut coke = pepsi.clone();
+
+    println!("{}", pepsi.eq(&coke));
+    println!("{}", pepsi == coke);
+    coke.consume();
+    println!("{:?}", coke); // Debug 模式
 }
